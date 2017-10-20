@@ -15,7 +15,6 @@ class permission extends  Admin_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('permission_model', 'model');
     }
 
     public function index()

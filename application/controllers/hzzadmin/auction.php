@@ -13,7 +13,6 @@ class auction extends Admin_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('auction_model', 'model');
     }
 
     /**

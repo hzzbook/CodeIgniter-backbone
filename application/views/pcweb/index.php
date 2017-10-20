@@ -2,7 +2,7 @@
 
 <?php
 echo "<pre>";
-var_dump($cateid1,$cateid2);
+var_dump($cateid1);
 
 echo "</pre>";
 

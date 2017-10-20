@@ -28,6 +28,13 @@
                     <dd><i>网站名称：</i><input type="text" name="site_name" value="<?php echo $website['site_name']; ?>"></dd>
                     <dd><i>网站关键字：</i><input type="text" name="site_keyword" value="<?php echo $website['site_keyword']; ?>"></dd>
                     <dd><i>描述：</i><textarea name="site_description"><?php echo $website['site_description']; ?></textarea></dd>
+                    <dd><div ><i>logo：</i>
+                            <div style="margin-left:140px">
+                                <input id="logo_upload" name="file_upload" type="file" multiple="true">
+                                <input type="hidden" name="site_weibo" id="logoheadimg" value="<?php echo $website['site_logo']; ?>">
+                                <img width="200" height="200" src="<?php echo $website['site_logo']; ?>" id="logoimghead" />
+                            </div>
+                        </div></dd>
                     <dd><i>网站备案号：</i><input type="text" name="site_beian" value="<?php echo $website['site_beian']; ?>" ></dd>
                     <dd><i>Email：</i><input type="text" name="site_email" value="<?php echo $website['site_email']; ?>"> </dd>
                     <dd><i>联系电话：</i><input type="text" name="site_telphone" value="<?php echo $website['site_telphone']; ?>"></dd>
@@ -45,16 +52,16 @@
                         <i>微信服务号：</i>
                         <div style="margin-left:140px">
                             <input id="file_upload2" name="file_upload" type="file" multiple="true">
-                            <input type="hidden" name="site_wechat1" id="headimg" value="<?php echo $website['site_wechat1']; ?>">
-                            <img width="200" height="200" src="<?php echo $website['site_wechat1']; ?>" id="imghead" />
+                            <input type="hidden" name="site_wechat1" id="headimg2" value="<?php echo $website['site_wechat1']; ?>">
+                            <img width="200" height="200" src="<?php echo $website['site_wechat1']; ?>" id="imghead2" />
                         </div>
                             </div>
                         <div style="float:left">
                             <i>微信订阅号：</i>
                             <div style="margin-left:140px">
                                 <input id="file_upload3" name="file_upload" type="file" multiple="true">
-                                <input type="hidden" name="site_wechat2" id="headimg" value="<?php echo $website['site_wechat2']; ?>">
-                                <img width="200" height="200" src="<?php echo $website['site_wechat2']; ?>" id="imghead" />
+                                <input type="hidden" name="site_wechat2" id="headimg3" value="<?php echo $website['site_wechat2']; ?>">
+                                <img width="200" height="200" src="<?php echo $website['site_wechat2']; ?>" id="imghead3" />
                             </div>
                         </div>
                         <div style="clear: both"></div>
@@ -75,6 +82,24 @@
 <script src="/adminasset/js/layer/layer.js"></script>
 <script type="text/javascript">
     <?php $timestamp = time();?>
+    $(function() {
+        $('#logo_upload').uploadify({
+            'fileSizeLimit' : '1MB',
+            'fileTypeExts' : '*.gif; *.jpg; *.png',
+            'formData'     : {
+                'timestamp' : '<?php echo $timestamp;?>',
+                'token'     : '<?php echo md5('unique_salt' . $timestamp);?>'
+            },
+            'swf'      : '/adminasset/uploadify/uploadify.swf',
+            'uploader' : '/adminasset/uploadify/uploadify.php',
+            'width' : 200,
+            'queueproess'    : false,
+            'onUploadSuccess' : function(file, data, response){
+                $('#logoheadimg').val(data);
+                $('#logoimghead').attr('src',data);
+            }
+        });
+    });
     $(function() {
         $('#file_upload').uploadify({
             'fileSizeLimit' : '1MB',
@@ -106,8 +131,8 @@
             'width' : 200,
             'queueproess'    : false,
             'onUploadSuccess' : function(file, data, response){
-                $('#headimg').val(data);
-                $('#imghead').attr('src',data);
+                $('#headimg2').val(data);
+                $('#imghead2').attr('src',data);
             }
         });
     });
@@ -124,8 +149,8 @@
             'width' : 200,
             'queueproess'    : false,
             'onUploadSuccess' : function(file, data, response){
-                $('#headimg').val(data);
-                $('#imghead').attr('src',data);
+                $('#headimg3').val(data);
+                $('#imghead3').attr('src',data);
             }
         });
     });

@@ -33,6 +33,7 @@
     <table class="table table-bordered table-hover">
         <thead>
         <tr>
+            <td>id</td>
             <td>标题</td>
             <td>父分类</td>
             <td>描述</td>
@@ -43,6 +44,7 @@
         <tbody>
         {{# for(var i = 0, len = d.data.length; i < len; i++){ }}
         <tr>
+            <td>{{ d.data[i].id }}</td>
             <td>{{ d.data[i].title }}</td>
             <td>{{ d.data[i].catetitle }}</td>
             <td>{{ d.data[i].description }}</td>

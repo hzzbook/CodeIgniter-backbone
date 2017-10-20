@@ -30,8 +30,8 @@
         text-indent: 5px;
     }
 </style>
-<link rel="stylesheet" href="/ked/themes/default/default.css" />
-<link rel="stylesheet" href="/ked/plugins/code/prettify.css" />
+<link rel="stylesheet" href="/asset/ked/themes/default/default.css" />
+<link rel="stylesheet" href="/asset/ked/plugins/code/prettify.css" />
 <link rel="stylesheet" type="text/css" href="/adminasset/uploadify/uploadify.css">
 <script charset="utf-8" src="/ked/kindeditor.js"></script>
 <script charset="utf-8" src="/adminasset/uploadify/jquery.js"></script>
