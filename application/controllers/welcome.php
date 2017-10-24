@@ -17,7 +17,7 @@ class Welcome extends frontbase
             'cate' => '2',
             'num' => 5,
         );
-        $cateid2 = $this->article_model->lists($typeData);
+        //$cateid2 = $this->article_model->lists($typeData);
         #幸福生活
         $typeData1 = array(      #取5条cateid=2的文章数据
             'cate' => '1',
@@ -26,7 +26,7 @@ class Welcome extends frontbase
         $cateid1 = $this->article_model->lists($typeData1);
 
         $data = array(
-            'cateid2' => $cateid2['data'],
+           // 'cateid2' => $cateid2['data'],
             'cateid1' => $cateid1['data']
         );
 
