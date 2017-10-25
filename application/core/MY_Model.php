@@ -127,7 +127,7 @@ class MY_Model extends CI_Model {
             return '';
         }
         foreach ($order as $key=> $value) {
-            if (isset($value['tabel']))
+            if (isset($value['table']))
                 $temp[] = $value['table'].'.'.$key.' '.$value['orderby'];
             else
                 $temp[] = $key.' '.$value['orderby'];
@@ -465,14 +465,20 @@ class Temp_model extends MY_Model
 
     }
 
-    function order ($order)
+    function order ($input)
     {
         $temp = array();
-        if (empty($order)) {
+        if (empty($this->order)) {
             return '';
         }
+
+        if (isset($input['order']) && array_key_exists($input['order'], $this->order))
+            $orderArray = array($this->order[$input['order']]);
+        else
+            $orderArray = array();
+
         $tabelName = $this->alias == '' ? $this->db->dbprefix($this->table):$this->alias;
-        foreach ($order as $key=> $value) {
+        foreach ($orderArray as $key=> $value) {
             if (isset($value['table']) && $value['table'] !='')
                 $temp[] = $value['table'].'.'.$value['filed'].' '.$value['orderby'];
             else
@@ -596,7 +602,7 @@ class Temp_model extends MY_Model
                 'info'   => '没有更多数据'
             );
         } else {
-            $order = $this->order($this->order);
+            $order = $this->order($input);
             $column = $this->column();
             $resSql = " select $column from " . $sql . ' ' . $order . ' ' . $limit['string'];
 

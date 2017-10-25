@@ -89,20 +89,31 @@ class article_model extends Temp_model
     }
 
     //上一篇文章
-    public function preArticle($id, $cid) {
-        $sql = "select id, title from ".$this->db->dbprefix('cms_article')
+    public function preArticle($id, $cid = '')
+    {
+        if ($cid == '') {
+            $itemInfo = $this->item($id);
+            $cid = $itemInfo['data']['cateid'];
+        }
+
+        $sql = "select * from ".$this->db->dbprefix('cms_article')
             ." where id < '".$id."' and cateid='".$cid."' and status=1 order by id desc limit 1";
         return $this->getRow($sql);
     }
 
     //下一篇文章
-    public function nextArticle($id, $cid) {
-        $sql = "select id, title from ".$this->db->dbprefix('cms_article')
+    public function nextArticle($id, $cid = '')
+    {
+        if ($cid == '') {
+            $itemInfo = $this->item($id);
+            $cid = $itemInfo['data']['cateid'];
+        }
+        $sql = "select * from ".$this->db->dbprefix('cms_article')
             ." where id > '".$id."' and cateid='".$cid."' and status=1 order by id asc limit 1";
         return $this->getRow($sql);
     }
 
-    public function nextArticleMore($id)
+/*    public function nextArticleMore($id)
     {
         $itemInfo = $this->item($id);
         $cid = $itemInfo['data']['cateid'];
@@ -111,7 +122,7 @@ class article_model extends Temp_model
             ." where id > '".$id."' and cateid='".$cid."' and status=1 order by id asc limit 1";
 
         return $this->getRow($sql);
-    }
+    }*/
 
     public function nextLists($id, $page = 1, $num = 10)
     {
