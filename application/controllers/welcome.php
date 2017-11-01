@@ -100,12 +100,12 @@ class Welcome extends frontbase
         if ($userinfo['status'] == 'true')
         {
             $output = array(
-                'status' => "false", #说明字符不可用
+                'status' => "false",     #说明字符不可用
                 'info'   => '已经被占用'
             );
         } else {
             $output = array(
-                'status' => "true",  #说明字符可用
+                'status' => "true",      #说明字符可用
                 'info'   => '可用'
             );
         }
