@@ -49,6 +49,12 @@ class doing extends MY_Controller
 
     }
 
+    #分页模式
+    public function page()
+    {
+        
+    }
+
 
 
 

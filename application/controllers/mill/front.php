@@ -16,11 +16,19 @@ class front extends MY_Controller
         $this->load->view('mill/front/index');
     }
 
-    public function page()
+    #普通后端渲染页面
+    public function normalPage()
     {
-
+        $this->load->view('mill/front/normal');
     }
 
+    #前后端分离页面
+    public function separationPage()
+    {
+        $this->load->view('mill/front/separation');
+    }
+
+    #后端单条数据
     public function item()
     {
         $output = array(
@@ -29,6 +37,7 @@ class front extends MY_Controller
         echo json_encode($output);
     }
 
+    #后端多条数据
     public function lists()
     {
         $output = array(
