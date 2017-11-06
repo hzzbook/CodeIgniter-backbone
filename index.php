@@ -100,6 +100,13 @@ if (defined('ENVIRONMENT'))
 		define('APPPATH', BASEPATH.$application_folder.'/');
 	}
 
+
+#定义邮箱发送配置
+define('EMAIL_HOST', 'stmp.126.com');
+define('EMAIL_USERNAME', 'xxx@126.com');
+define('EMAIL_PASSWORD', '1234567');
+
+
 /*
  * --------------------------------------------------------------------
  * LOAD THE BOOTSTRAP FILE

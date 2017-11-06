@@ -19,13 +19,36 @@ class front extends MY_Controller
     #普通后端渲染页面
     public function normalPage()
     {
-        $this->load->view('mill/front/normal');
+        $output = array(
+            'title' => "后端渲染页面",
+            'lists' => array(
+                array(
+                    'title' => "AAAA1",
+                    'price' => "100",
+                ),
+                array(
+                    'title' => "AAAA2",
+                    'price' => "100",
+                ),
+                array(
+                    'title' => "AAAA3",
+                    'price' => "100",
+                ),
+            ),
+        );
+        $this->load->view('mill/front/normal', $output);
     }
 
     #前后端分离页面
     public function separationPage()
     {
         $this->load->view('mill/front/separation');
+    }
+
+    #前端模板引擎
+    public function template()
+    {
+        $this->load->view('mill/front/template');
     }
 
     #后端单条数据

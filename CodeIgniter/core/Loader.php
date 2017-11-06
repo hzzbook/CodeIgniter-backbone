@@ -332,7 +332,14 @@ class CI_Loader {
 			return FALSE;
 		}
 
-		require_once(BASEPATH.'database/DB.php');
+		#require_once(BASEPATH.'database/DB.php');
+        #2017-11-6 读写分离代码
+        if(file_exists(APPPATH.'core/database/DB.php')) {
+            require_once(APPPATH.'core/database/DB.php');
+        } else {
+            require_once(BASEPATH.'database/DB.php');
+        }
+        #读写end
 
 		if ($return === TRUE)
 		{
