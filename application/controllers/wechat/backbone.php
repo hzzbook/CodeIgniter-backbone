@@ -7,23 +7,16 @@
  * @Date: 2017/9/11
  * 
  */
-define("TOKEN", 'weixin');
-define("APPID", "");
-define("APPSECRET", "");
-
 class backbone extends  MY_Controller
 {
     public function __construct() {
         parent::__construct();
         header("Content-type:text/html;charset=utf-8");
-        $this->load->library('curl');
         $this->load->driver('cache', array('adapter' => 'file'));
     }
 
     public function getToken() {
-        $appid = $this->input->post('appid');
-        $appsecret = $this->input->post('appsecret');
-        $res = $this->_getToken($appid, $appsecret);
+        $res = $this->_getToken();
         if(isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && strtolower($_SERVER["HTTP_X_REQUESTED_WITH"])=="xmlhttprequest"){
             // ajax 请求的处理方式
             echo $res['access_token'];
@@ -35,14 +28,11 @@ class backbone extends  MY_Controller
     }
 
     //获取凭证
-    private function _getToken($appid = '', $appsecret = '') {
-        $appid == '' ? $APPID = $this->input->post('appid') : $APPID = $appid;
-        $appsecret == '' ? $APPSECRET = $this->input->post('appsecret') : $APPSECRET = $appsecret;
-        $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$APPID&secret=$APPSECRET";
-        $data = '';
-        $res = $this->curl->post($url, $data);
-        $data = json_decode($res, true);
-        return $data;
+    private function _getToken() {
+        $this->load->library('wechat/Wxbase');
+        $Wxbase = new Wxbase();
+        $token = $Wxbase->token();
+        return $token;
     }
 
     //内部
@@ -51,9 +41,7 @@ class backbone extends  MY_Controller
         //$token = $this->cache->get('access_token');
         $token = '';
         if ($token == '') {
-            $appid = APPID;
-            $appsecret = APPSECRET;
-            $res = $this->_getToken($appid, $appsecret);
+            $res = $this->_getToken();
             //如果没有正确获取懂Token,返回错误消息
 
             //$this->cache->save("access_token", $res, 7200);
@@ -61,16 +49,6 @@ class backbone extends  MY_Controller
             $token = $res['access_token'];
         }
         return $token;
-    }
-
-    public function getWxIP() {
-        $ACCESS_TOKEN = $this->getTokenFromIn();
-        $url = "https://api.weixin.qq.com/cgi-bin/getcallbackip?access_token=$ACCESS_TOKEN";
-        $data = '';
-        $res = $this->curl->post($url, $data);
-        $data = json_decode($res, true);
-        var_dump($data);
-        return $data;
     }
 
     function index()
@@ -94,23 +72,13 @@ class backbone extends  MY_Controller
         $signature = $_GET["signature"];
         $timestamp = $_GET["timestamp"];
         $nonce = $_GET["nonce"];
-        if ($this->_checkSignature($signature, $timestamp, $nonce) === true) {
-            echo $echoStr;
+
+        $this->load->library('wechat/Wxbase');
+        $Wxbase = new Wxbase();
+        $token = $Wxbase->checkSignature($signature, $timestamp, $nonce);
+        if ($token === true) {
             return true;
         } else {
-            return false;
-        }
-    }
-
-    private function _checkSignature($signature, $timestamp, $nonce) {
-        $token = TOKEN;
-        $tmpArr = array($token, $timestamp, $nonce);
-        sort($tmpArr, SORT_STRING);
-        $tmpStr = implode( $tmpArr );
-        $tmpStr = sha1( $tmpStr );
-        if( $tmpStr == $signature ){
-            return true;
-        }else{
             return false;
         }
     }

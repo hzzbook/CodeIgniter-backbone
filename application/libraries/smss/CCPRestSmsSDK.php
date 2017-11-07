@@ -18,7 +18,7 @@ class REST {
 	private $AccountSid;
 	private $AccountToken;
 	private $AppId;
-	private $ServerIP;
+	public $ServerIP;
 	private $ServerPort;
 	private $SoftVersion;
 	private $Batch;  //时间戳

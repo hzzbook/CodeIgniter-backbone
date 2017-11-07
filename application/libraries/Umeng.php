@@ -16,10 +16,20 @@ class Umeng {
 	protected $timestamp        = NULL;
 	protected $validation_token = NULL;
 
-	function __construct($key, $secret) {
-		$this->appkey = $key;
-		$this->appMasterSecret = $secret;
-		$this->timestamp = strval(time());
+	function __construct() {
+        if ( ! file_exists($file_path = APPPATH.'config/thirdpart.php'))
+        {
+            show_error('The configuration file thirdpart.php does not exist.');
+        } else {
+            include($file_path);
+        }
+        if (!isset($Umeng)) {
+            show_error('The Umeng does not exist.');
+        } else {
+            $this->appkey = $Umeng['key'];
+            $this->appMasterSecret = $Umeng['secret'];
+            $this->timestamp = strval(time());
+        }
 	}
 
 	function sendAndroidBroadcast() {

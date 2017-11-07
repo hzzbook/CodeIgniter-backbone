@@ -13,7 +13,20 @@
 class pay extends MY_Controller
 {
 
+    public function alipay()
+    {
 
+    }
+
+    public function alipay_notify()
+    {
+
+    }
+
+    public function alipay_returnback()
+    {
+
+    }
 
 
 }

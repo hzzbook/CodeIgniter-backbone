@@ -9,14 +9,28 @@ class Email
     private $donkey;
 
     #主人的必要信息
-    private $host = EMAIL_HOST;     #发送邮件的服务器
-    private $port = 25;                 #发送邮件的端口
-    private $username = EMAIL_USERNAME;     #邮件服务器的账户  ex. xxx@xx.com
-    private $password = EMAIL_PASSWORD;     #对应SMTP邮件服务器账户的密码，而不是邮箱登录密码
+    private $host;     #发送邮件的服务器
+    private $port;                 #发送邮件的端口
+    private $username;     #邮件服务器的账户  ex. xxx@xx.com
+    private $password;     #对应SMTP邮件服务器账户的密码，而不是邮箱登录密码
 
     public  function __construct()
     {
-        $this->donkey = new PHPMailer();
+        if ( ! file_exists($file_path = APPPATH.'config/thirdpart.php'))
+        {
+            show_error('The configuration file thirdpart.php does not exist.');
+        } else {
+            include($file_path);        #包含Mailer配置文件
+        }
+        if (!isset($Mailer)) {
+            show_error('The Alipay_config does not exist.');
+        } else {
+            $this->host = $Mailer['email_host'];
+            $this->port = $Mailer['email_port'];
+            $this->username = $Mailer['email_username'];
+            $this->password = $Mailer['email_password'];
+            $this->donkey = new PHPMailer();
+        }
     }
 
 

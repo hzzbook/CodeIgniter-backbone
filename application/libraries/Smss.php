@@ -33,6 +33,22 @@ class Smss
     //REST版本号，在官网文档REST介绍中获得。
     var $softVersion='2013-12-26';
 
+    function __construct() {
+        if ( ! file_exists($file_path = APPPATH.'config/thirdpart.php'))
+        {
+            show_error('The configuration file thirdpart.php does not exist.');
+        } else {
+            include($file_path);
+        }
+        if (!isset($CCP)) {
+            show_error('The CCP does not exist.');
+        } else {
+            $this->accountSid = $CCP['accountSid'];
+            $this->accountToken = $CCP['accountToken'];
+            $this->appId = $CCP['appId'];
+        }
+    }
+
 
     /**
      * 发送模板短信
