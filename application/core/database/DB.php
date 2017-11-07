@@ -119,7 +119,12 @@ function &DB($params = '', $active_record_override = NULL)
         $active_record = $active_record_override;
     }
 
-    require_once(BASEPATH.'database/DB_driver.php');
+    //require_once(BASEPATH.'database/DB_driver.php');
+    if(file_exists(APPPATH.'core/database/DB_driver.php')) {
+        require_once(APPPATH.'core/database/DB_driver.php');
+    } else {
+        require_once(BASEPATH.'database/DB_driver.php');
+    }
 
     if ( ! isset($active_record) OR $active_record == TRUE)
     {
@@ -138,7 +143,14 @@ function &DB($params = '', $active_record_override = NULL)
         }
     }
 
-    require_once(BASEPATH.'database/drivers/'.$params['dbdriver'].'/'.$params['dbdriver'].'_driver.php');
+    //require_once(BASEPATH.'database/drivers/'.$params['dbdriver'].'/'.$params['dbdriver'].'_driver.php');
+    if(file_exists(APPPATH.'core/database/drivers/'.$params['dbdriver'].'/'.$params['dbdriver'].'_driver.php')) {
+        require_once(APPPATH.'core/database/drivers/'.$params['dbdriver'].'/'.$params['dbdriver'].'_driver.php');
+    } else {
+        require_once(BASEPATH.'database/drivers/'.$params['dbdriver'].'/'.$params['dbdriver'].'_driver.php');
+    }
+    //将当前group name赋值给param，方便判断
+    $params['group_name'] = $active_group;
 
     // Instantiate the DB adapter
     $driver = 'CI_DB_'.$params['dbdriver'].'_driver';
