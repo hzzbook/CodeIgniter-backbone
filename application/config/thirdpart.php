@@ -40,6 +40,23 @@ $Wxpay_config = array(
 
 );
 
+#微信登录配置
+$Wxlogin_config = array(
+    'appid' => '',
+    'appkey' => ''
+);
+
+#QQ登录配置
+$QQlogin_config = array(
+    'appid' => '',
+    'appkey' => ''
+);
+
+#微博登录配置
+$Weibologin_config = array(
+    'App_Key' => 'xxxxx',
+    'App_Secret' => 'xxxxxxxxxxxxxxxxx'
+);
 
 #支付宝支付配置
 $Alipay_config = array (

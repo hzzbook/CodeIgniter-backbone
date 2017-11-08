@@ -5,7 +5,7 @@ class MY_Controller extends CI_Controller {
 	
 	public function __construct() {
 		parent::__construct();
-        $this->load->service('common/helper_service', NULL, 'helper');
+        /*$this->load->service('common/helper_service', NULL, 'helper');
         //下面这段为关闭CI超级对象中的数据库对象和数据库链接，db的对象Codeigniter.php中会关闭
         register_shutdown_function(function(){
             foreach(get_object_vars($this) as $key => $val) {
@@ -17,7 +17,7 @@ class MY_Controller extends CI_Controller {
                     unset($this->{$key});
                 }
             }
-        });
+        });*/
         $this->is_install();
 	}
 	
