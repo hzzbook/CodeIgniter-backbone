@@ -136,6 +136,55 @@ class inflow extends MY_Controller
             file_put_contents($updatepageFile, $updatePage);
     }
 
+    public function list_fields()
+    {
+        $table = "user";
+        $result = $this->db->list_fields($table);
+        var_dump($result);
+    }
+
+
+    /**
+     *
+     * type
+     *      text  文本类型
+     *      bigtext   长文本
+     *      textarea    文本框
+     *      richtext    富文本
+     *      select      下拉
+     *      upload_img  图片上传
+     *      upload_img_group  多图片上传
+     *      upload_file 附件上传
+     *      upload_file_group 多附件上传
+     *
+     */
+    public function makeForm()
+    {
+
+        $input = array(
+            array(
+                'fields' => 'username', #字段的名称
+                'type'   => 'text',     #文本的类型
+                'need'   => '1'         #是否是必要的
+            ),
+            array(
+                'fields' => 'password',
+                'type'   => 'text',
+                'need'   => '1',
+            ),
+            array(
+                'fields' => 'nickname',
+                'type'   => 'text',
+                'need'   => '1',
+            ),
+            array(
+                'fields' => 'email',
+                'type'   => 'text',
+                'need'   => '0'
+            ),
+        );
+    }
+
 
 
 }
