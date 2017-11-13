@@ -163,6 +163,7 @@ class inflow extends MY_Controller
 
         $input = array(
             array(
+                'title' => '用户名', #标题
                 'fields' => 'username', #字段的名称
                 'type'   => 'text',     #文本的类型
                 'need'   => '1'         #是否是必要的
@@ -183,6 +184,8 @@ class inflow extends MY_Controller
                 'need'   => '0'
             ),
         );
+
+
     }
 
 

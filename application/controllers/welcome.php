@@ -10,8 +10,9 @@ class Welcome extends frontbase
 
     public function index()
     {
+        $this->load->helper('data');
         $this->load->model('content/article_model', 'article_model');
-
+        #$datalist = data_lists('cms_article', 5);
         #幸福生活
         $typeData = array(      #取5条cateid=2的文章数据
             'cate' => '2',
