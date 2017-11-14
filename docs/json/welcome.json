@@ -1,11 +1,11 @@
 {
-    "basePath": "http://localhost/auth/",
+    "basePath": "http://www.v4.com/welcome",
     "swaggerVersion": "1.2",
     "apiVersion": "0.2",
     "resourcePath": "/welcome",
     "apis": [
         {
-            "path": "welcome/helloword",
+            "path": "welcome/index",
             "description": "Hello world",
             "operations": [
                 {

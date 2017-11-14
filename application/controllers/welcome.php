@@ -1,5 +1,19 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php
+use Swagger\Annotations as SWG;
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/**
+ * @package
+ * @category
+ * @subpackage
+ *
+ * @SWG\Resource(
+ *  apiVersion="0.2",
+ *  swaggerVersion="1.2",
+ *  resourcePath="/welcome",
+ *  basePath="http://www.v4.com/",
+ *  produces="['application/json']"
+ * )
+ */
 class Welcome extends frontbase
 {
 
@@ -8,6 +22,40 @@ class Welcome extends frontbase
         parent::__construct();
     }
 
+    /**
+     *
+     * @SWG\Api(
+     *   path="welcome/index",
+     *   description="Hello world",
+     *   @SWG\Operations(
+     *     @SWG\Operation(
+     *       method="GET",
+     *       summary="Hello world",
+     *       notes="Returns a string",
+     *       nickname="helloWord",
+     *       @SWG\Parameters(
+     *         @SWG\Parameter(
+     *           name="username",
+     *           description="your username",
+     *           paramType="query",
+     *           required=true,
+     *           type="string"
+     *         )
+     *       ),
+     *       @SWG\ResponseMessages(
+     *          @SWG\ResponseMessage(
+     *            code=400,
+     *            message="Invalid username"
+     *          ),
+     *          @SWG\ResponseMessage(
+     *            code=404,
+     *            message="Not found"
+     *          )
+     *       )
+     *     )
+     *   )
+     * )
+     */
     public function index()
     {
         $this->load->helper('data');
