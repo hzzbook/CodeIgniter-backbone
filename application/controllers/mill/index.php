@@ -14,6 +14,22 @@ class index extends MY_Controller
         parent::__construct();
     }
 
+    public function checkEnvironment()
+    {
+        #判断PHP版本
+        $phpversion = phpversion();
+        echo $phpversion;
+        #判断是否安装memcached
+        if (function_exists('memcache_debug')) {
+            echo "memcache安装正常";
+        }
+        #判断是否安装redis
+        if (function_exists('')) {
+
+        }
+
+    }
+
     public function index()
     {
         $this->load->view('mill');
