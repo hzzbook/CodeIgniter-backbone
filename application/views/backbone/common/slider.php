@@ -12,6 +12,7 @@
                         if ($value['cont'] == $slider_tag) {
                             if (isset($value['submenu'])) {
                                 $submenu = $value['submenu'];
+                                $slidername = $value['node_name'];
                             }
                            echo ' <li class="sidebar_list_2 on">
                             <a href="/',$value['node_url'],'"><i class="fa fa-',$value['node_icon'],'"></i> <span>',$value['node_name'],'</span></a></li>';
@@ -33,7 +34,7 @@
         ?>
     <div class="sidebar_2">
         <div class="sidebar_2_box">
-            <h4>二级列表</h4>
+            <h4><?php echo $slidername; ?></h4>
             <ul>
                     <?php
                     foreach ($submenu as $key => $value) {

@@ -40,7 +40,7 @@
                 </div>
                 <div class=" col-md-4 canvasTxt" >
                     <h5 class="txt_head">投资金额统计</h5>
-
+                    <div id="ra"></div>
                 </div>
 
                 <div class=" col-md-4 canvasTxt" >
@@ -56,6 +56,7 @@
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
+    var myChart2 = echarts.init(document.getElementById('ra'));
 
     function writechart(res)
     {
