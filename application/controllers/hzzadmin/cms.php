@@ -1483,46 +1483,45 @@ class cms extends Admin_Controller
     {
         $input = $this->input->post();
         $this->load->library('formtoken');
-        $token =  $this->formtoken->check('editseo', $input['token']);
-        if ($token === true)
-        {
+        $token = $this->formtoken->check('editseo', $input['token']);
+        if ($token === true) {
             $back = array(
                 'status' => 'false',
-                'code'   => '868',
-                'info'   => urlencode('表单token失效'),
-                'token'  => $token
+                'code' => '868',
+                'info' => urlencode('表单token失效'),
+                'token' => $token
             );
-            echo urldecode(json_encode($back)); exit;
+            echo urldecode(json_encode($back));
+            exit;
         }
         unset($input['token']);
 
         $checkForm = array(
             'title',
         );
-        if ($this->formtoken->blank($checkForm, $input) == false)
-        {
+        if ($this->formtoken->blank($checkForm, $input) == false) {
             $back = array(
                 'status' => 'false',
-                'code'   => '869',
-                'info'   => urldecode('确认必填项填写完毕')
+                'code' => '869',
+                'info' => urldecode('确认必填项填写完毕')
             );
-            echo urldecode(json_encode($back)); exit;
+            echo urldecode(json_encode($back));
+            exit;
         }
 
         $res = $this->model->updateSeo($input['id'], $input);
-        if ($res == true)
-        {
+        if ($res == true) {
             $back = array(
                 'status' => 'true',
-                'code'   => '0',
-                'info'   => urldecode('修改文章成功'),
+                'code' => '0',
+                'info' => urldecode('修改文章成功'),
             );
             echo urldecode(json_encode($back));
         } else {
             $back = array(
                 'status' => 'false',
-                'code'   => '500',
-                'info'   => urldecode('添加文章失败')
+                'code' => '500',
+                'info' => urldecode('添加文章失败')
             );
             echo urldecode(json_encode($back));
         }

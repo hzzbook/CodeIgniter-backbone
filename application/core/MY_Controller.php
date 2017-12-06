@@ -197,6 +197,92 @@ class Admin_Controller extends CI_Controller
         parent::__construct();
     }
 
+    public function getUrls()
+    {
+        $url = 'http://www.rrcareer.cn/';
+        $urls = array(
+            $url.'index.html',
+            $url.'xjybasic.html',
+            $url.'xjycombat.html',
+            $url.'xjybusiness.html',
+            $url.'leading.html',
+            $url.'reading.html',
+            $url.'talent.html',
+            $url.'supervise.html',
+            $url.'internal.html',
+            $url.'ecosystem.html',
+            $url.'demos.html',
+            $url.'elements.html',
+            $url.'products.html',
+            $url.'news.html',
+            $url.'aboutus.html',
+            $url.'joinus.html',
+            $url.'cases.html',
+            $url.'team.html',
+            $url.'activity.html',
+            $url.'mbti.html',
+            $url.'holland.html',
+        );
+        return $urls;
+    }
+
+    public function urlsPHP($id, $type = 'news')
+    {
+        $url = base_url();
+        $urls = array(
+            $url.$type.'-'.$id.'.html'
+        );
+        $api = "http://data.zz.baidu.com/urls?site=$url&token=2EdJCfpFLQHEYZtK";
+        $ch = curl_init();
+        $options =  array(
+            CURLOPT_URL => $api,
+            CURLOPT_POST => true,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POSTFIELDS => implode("\n", $urls),
+            CURLOPT_HTTPHEADER => array('Content-Type: text/plain'),
+        );
+        curl_setopt_array($ch, $options);
+        $result = curl_exec($ch);
+        //echo $result;
+    }
+
+    public function updateOnePHP($id, $type = 'news')
+    {
+        $url = base_url();
+        $urls = array(
+            $url.$type.'-'.$id.'.html'
+        );
+        $api = "http://data.zz.baidu.com/update?site=$url&token=2EdJCfpFLQHEYZtK";
+        $ch = curl_init();
+        $options =  array(
+            CURLOPT_URL => $api,
+            CURLOPT_POST => true,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POSTFIELDS => implode("\n", $urls),
+            CURLOPT_HTTPHEADER => array('Content-Type: text/plain'),
+        );
+        curl_setopt_array($ch, $options);
+        $result = curl_exec($ch);
+        //echo $result;
+    }
+
+    public function updatePHP()
+    {
+        $urls = $this->getUrls();
+        $api = "http://data.zz.baidu.com/update?site=$url&token=2EdJCfpFLQHEYZtK";
+        $ch = curl_init();
+        $options =  array(
+            CURLOPT_URL => $api,
+            CURLOPT_POST => true,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POSTFIELDS => implode("\n", $urls),
+            CURLOPT_HTTPHEADER => array('Content-Type: text/plain'),
+        );
+        curl_setopt_array($ch, $options);
+        $result = curl_exec($ch);
+        //echo $result;
+    }
+
     public function auth()
     {
         $this->load->library('rbac');
