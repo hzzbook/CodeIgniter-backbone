@@ -1079,4 +1079,146 @@ class cms_model extends MY_Model
         return $this->getRow($sql);
     }
 
+    public function seos($data)
+    {
+        $list = $this->_seos($data);
+        return $list;
+    }
+
+    /**
+     * 文章列表
+     * @param $data
+     */
+    public function _seos($data, $all = null)
+    {
+        $where = array(
+            'title' => array(
+                'filed'     => 'title',
+                'type' 		=> "string",
+                'table' 	=> 'A',
+                'expression'    => 'like'
+            ),
+            'cate' => array(
+                'filed'     => 'fid',
+                'type' 		=> "string",
+                'table' 	=> 'A',
+                'expression'    => '='
+            ),
+        );
+        $where = $this->where($where, $data);
+
+        #根据得到数据条数
+        $result['sum'] = $this->_getseoTotal($where);
+
+        if ($result['sum'] != 0) {
+            #有数据再去将具体数据读取出来
+            $sum = $result['sum'];
+            if (isset($data['order'])) {
+                $orderdata = array(
+                    'id' => array(        #字段名
+                        'table' => "A"
+                    ),
+                );
+                $orderdata = $this->makeOrder($orderdata, $data['order']);
+
+                $order = $this->order($orderdata);
+            } else {
+                $order = '';
+            }
+            if ($all == 'all') {
+                $limit = '';
+            } else {
+                $limit = $this->limit($data, $sum);
+                if ($limit == 'toobig') {
+                    $back = array(
+                        'status' => 'false',
+                        'code' => '406',
+                        'info' => urlencode('没有更多数据了')
+                    );
+                    return $back;
+                }
+            }
+
+            $result['data'] = $this->_getseoList($where, $order, $limit['string'], $sum);
+            $result['page'] = $limit['page'];
+            $result['status'] = 'true';
+            $result['code'] = '0';
+        } else {
+            $result['data'] = 'false';
+            $result['status'] = 'false';
+            $result['code'] = '404';
+        }
+        return $result;
+    }
+
+    private function _getseoTotal($where)
+    {
+        $sql = "select count(A.id) as sum from "
+            . $this->db->dbprefix('cms_seo') . ' as A  '
+            . $where;
+
+        $result = $this->getRow($sql);
+        if ($result['sum'] >= 1) {
+            return $result['sum'];
+        } else {
+            return 0;
+        }
+    }
+
+    private function _getseoList($where, $order, $limit)
+    {
+        $sql = "select A.* from "
+            . $this->db->dbprefix('cms_seo') . ' as A  '
+            . $where
+            . $order
+            . $limit;
+
+        return $this->getResult($sql);
+    }
+
+    public function seo($aid)
+    {
+        $seoInfo = $this->_seo($aid);
+        if ($seoInfo == FALSE) {
+            $back = array(
+                'status' => 'false',
+                'code' => '404',
+                'info' => '不存在'
+            );
+        } else {
+            $back = array(
+                'status' => 'true',
+                'code' => '0',
+                'data' => $seoInfo
+            );
+        }
+        return $back;
+    }
+
+    private function _seo($aid)
+    {
+        $where = array(
+            'type' => 'int',        //int / string
+            'table' => 'seo',
+            'key' => 'id',
+            'value' => $aid,
+        );
+        $result = $this->_seoQL($where);
+        return $result;
+    }
+
+    private function _seoQL($where)
+    {
+        $where = $this->One($where);
+        $sql = "select seo.* from "
+            . $this->db->dbprefix('cms_seo') . ' as seo '
+            . $where;
+        return $this->getRow($sql);
+    }
+
+    public function updateSeo($id, $data)
+    {
+        return $this->update('cms_seo', $data, $id);
+    }
+
 }

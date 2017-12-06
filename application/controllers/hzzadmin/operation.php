@@ -105,6 +105,57 @@ class operation extends Admin_Controller
         $this->display('backbone/'.$classinfo['class'].'/'.$classinfo['function'], $node);
     }
 
+    public function linklAdd()
+    {
+        $input = $this->input->post();
+        $classinfo = $this->backconfig();
+        $this->load->library('formtoken');
+        $token = $this->formtoken->check($classinfo['function'].'Page', $input['token']);
+        if ($token === true)
+        {
+            $back = array(
+                'status' => 'false',
+                'code'   => '868',
+                'info'   => urlencode('表单token失效'),
+                'token'  => $token['token']
+            );
+            echo urldecode(json_encode($back)); exit;
+        }
+        unset($input['token']);
+
+        $checkForm = array(         //必填字段
+            'name',
+        );
+        if ($this->formtoken->blank($checkForm, $input) == false)
+        {
+            $back = array(
+                'status' => 'false',
+                'code'   => '869',
+                'info'   => urldecode('确认必填项填写完毕')
+            );
+            echo urldecode(json_encode($back)); exit;
+        }
+        $this->load->model('operation/channellink_model', 'data_model');
+        $res = $this->data_model->itemAdd($input);
+        if ($res == true)
+        {
+            $back = array(
+                'status' => 'true',
+                'code'   => '0',
+                'info'   => urldecode('添加权限结点成功'),
+                'id'     => $res        #返回权限结点ID
+            );
+            echo urldecode(json_encode($back));
+        } else {
+            $back = array(
+                'status' => 'false',
+                'code'   => '500',
+                'info'   => urldecode('添加权限结点失败')
+            );
+            echo urldecode(json_encode($back));
+        }
+    }
+
     public function channelAdd()
     {
         $input = $this->input->post();
@@ -171,6 +222,8 @@ class operation extends Admin_Controller
         );
         $this->display('backbone/'.$classinfo['class'].'/'.$classinfo['function'], $node);
     }
+
+
 
     public function linkUpdatePage()
     {

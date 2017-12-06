@@ -410,4 +410,20 @@ class systems extends Admin_Controller
         }
     }
 
+    public function service()
+    {
+        $id = $this->input->get_post('id');
+
+        $classinfo = $this->backconfig();
+        $this->load->library('formtoken');
+        $token = $this->formtoken->create($classinfo['function']);
+        $data = array(
+            'slider_tag' => $classinfo['class'],
+            'nav_tag' => $classinfo['function'],
+            'token'   => $token,
+            'id'      => $id
+        );
+        $this->display('backbone/'.$classinfo['class'].'/'.$classinfo['function'], $data);
+    }
+
 }
