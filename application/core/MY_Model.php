@@ -145,9 +145,11 @@ class MY_Model extends CI_Model {
      */
     function order ($order) {
         $temp = array();
+
         if (empty($order)) {
             return '';
         }
+
         foreach ($order as $key=> $value) {
             if (isset($value['table']))
                 $temp[] = $value['table'].'.'.$key.' '.$value['orderby'];
@@ -487,18 +489,8 @@ class Temp_model extends MY_Model
 
     }
 
-    function order ($input)
+    function changeOrder($orderArray)
     {
-        $temp = array();
-        if (empty($this->order)) {
-            return '';
-        }
-
-        if (isset($input['order']) && array_key_exists($input['order'], $this->order))
-            $orderArray = array($this->order[$input['order']]);
-        else
-            $orderArray = array();
-
         $tabelName = $this->alias == '' ? $this->db->dbprefix($this->table):$this->alias;
         foreach ($orderArray as $key=> $value) {
             if (isset($value['table']) && $value['table'] !='')
@@ -506,6 +498,28 @@ class Temp_model extends MY_Model
             else
                 $temp[] = $tabelName.'.'.$value['filed'].' '.$value['orderby'];
         }
+        return $temp;
+    }
+
+    function order ($input)
+    {
+        $temp = array();
+        if (empty($this->order)) {
+            return '';
+        }
+
+        if (isset($input['order']) && array_key_exists($input['order'], $this->order)) {
+            $orderArray = array($this->order[$input['order']]);
+            $temp = $this->changeOrder($orderArray);
+        } elseif(isset($this->order['default'])) {
+            $orderArray = array($this->order['default']);
+            $temp = $this->changeOrder($orderArray);
+        } else {
+            $temp = array();
+        }
+
+        if (empty($temp))
+            return '';
         return ' order by '. implode(', ', $temp);
     }
 
@@ -663,7 +677,7 @@ class Temp_model extends MY_Model
         return $where;
     }
 
-    public function item($value, $key = 'id')
+    public function item($key = 'id', $value)
     {
         $column = $this->column();
         $input = $this->itemSql($value, $key);

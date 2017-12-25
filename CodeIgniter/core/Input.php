@@ -211,6 +211,23 @@ class CI_Input {
 		}
 	}
 
+    /**
+     * 获取POST+GET的数据
+     * @param bool $xss_clean
+     * @return array
+     */
+    function all($xss_clean = FALSE)
+    {
+        $post = $this->post(NULL, $xss_clean);
+        $get = $this->get(NULL, $xss_clean);
+
+        if (!is_array($post))
+            $post = array();
+        if (!is_array($get))
+            $get = array();
+        return array_merge($get, $post);        #如果两个数组的索引相同，后面的数组覆盖原来的索引对应值
+    }
+
 	// --------------------------------------------------------------------
 
 	/**

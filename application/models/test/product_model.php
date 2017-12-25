@@ -30,6 +30,16 @@ class product_model extends Temp_model
         )
     );
 
+    #设置唯一查询的列
+    var $itemKey = array(
+        'id' => array(
+            'filed' => 'id'
+        ),
+        'content' => array(
+            'filed' => 'content'
+        ),
+    );
+
     var $order = array(
         'price_desc' => array(  #价格由高到低
             'table' => '',
@@ -41,7 +51,7 @@ class product_model extends Temp_model
             'filed' => 'price',
             'orderby' => 'asc'
         ),
-        'least' => array(       #最新
+        'default' => array(       #最新
             'table' => '',
             'filed' => 'logtime',
             'orderby' => 'desc'

@@ -12,6 +12,12 @@ $datastatus = array(
     '0' => '不可用'
 );
 
+$pro_status = array(
+    '0' => '删除',
+    '1' => '未上架',
+    '2' => '上架'
+);
+
 //工作状态
 $work_status = array(
     '1' => '离职，正在找工作',
