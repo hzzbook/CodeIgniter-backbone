@@ -43,7 +43,7 @@ class auction extends Admin_Controller
     {
         $input = $this->input->post();
         $this->load->model('auction/category_model', 'category_model');
-        $data = $this->category_model->item($input['id']);
+        $data = $this->category_model->item('id', $input['id']);
         echo urldecode(json_encode($data));
     }
     /**
@@ -238,7 +238,7 @@ class auction extends Admin_Controller
     {
         $input = $this->input->post();
         $this->load->model('auction/good_model', 'good_model');
-        $data = $this->good_model->item($input['id']);
+        $data = $this->good_model->item('id', $input['id']);
         echo urldecode(json_encode($data));
     }
     /**
@@ -433,7 +433,7 @@ class auction extends Admin_Controller
     {
         $input = $this->input->post();
         $this->load->model('auction/convert_model', 'convert_model');
-        $data = $this->convert_model->item($input['id']);
+        $data = $this->convert_model->item('id', $input['id']);
         echo urldecode(json_encode($data));
     }
     /**

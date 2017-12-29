@@ -42,7 +42,7 @@ class cms extends Admin_Controller
     {
         $input = $this->input->post();
         $this->load->model('content/article_model', 'article_model');
-        $data = $this->article_model->item($input['id']);
+        $data = $this->article_model->item('id', $input['id']);
         echo urldecode(json_encode($data));
     }
 
@@ -262,7 +262,7 @@ class cms extends Admin_Controller
         unset($input['token']);
 
         $checkForm = array(
-            'title', 'fid', 'content'
+            'title', 'fid'
         );
         if ($this->formtoken->blank($checkForm, $input) == false)
         {
@@ -329,7 +329,7 @@ class cms extends Admin_Controller
         unset($input['token']);
 
         $checkForm = array(
-            'title', 'fid', 'content'
+            'title', 'fid'
         );
         if ($this->formtoken->blank($checkForm, $input) == false)
         {
@@ -425,7 +425,7 @@ class cms extends Admin_Controller
     {
         $input = $this->input->post();
         $this->load->model('content/image_model', 'image_model');
-        $data = $this->image_model->item($input['id']);
+        $data = $this->image_model->item('id', $input['id']);
         echo urldecode(json_encode($data));
     }
 
@@ -792,7 +792,7 @@ class cms extends Admin_Controller
     {
         $input = $this->input->post();
         $this->load->model('content/banner_model', 'banner_model');
-        $data = $this->banner_model->item($input['id']);
+        $data = $this->banner_model->item('id', $input['id']);
         echo urldecode(json_encode($data));
     }
 
@@ -980,7 +980,7 @@ class cms extends Admin_Controller
     {
         $input = $this->input->post();
         $this->load->model('content/friendly_model', 'friendly_model');
-        $data = $this->friendly_model->item($input['id']);
+        $data = $this->friendly_model->item('id', $input['id']);
         echo urldecode(json_encode($data));
     }
 

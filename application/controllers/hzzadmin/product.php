@@ -429,7 +429,7 @@ class product extends Admin_Controller
     {
         $input = $this->input->post();
         $this->load->model('product/fund_model', 'fund_model');
-        $data = $this->fund_model->item($input['id']);
+        $data = $this->fund_model->item('id', $input['id']);
         echo urldecode(json_encode($data));
     }
     /**

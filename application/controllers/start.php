@@ -15,6 +15,16 @@ class start extends MY_Controller
         parent::__construct();
     }
 
+    #读取配置信息方法
+    public function config_item()
+    {
+        #$this->config->load('thirdpart');
+        //$Weibologin_config = $this->config->item('Weibologin_config');
+        include_once (APPPATH.'config/thirdpart.php');
+        var_dump($Weibologin_config);
+
+    }
+
     /**
      * 查询过滤
      * @param string $page

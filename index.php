@@ -5,7 +5,7 @@
  * APPLICATION ENVIRONMENT
  *---------------------------------------------------------------
  */
- 
+date_default_timezone_set("PRC");
 /*
  * 定义报错级别
  */
