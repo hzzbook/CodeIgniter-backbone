@@ -68,7 +68,7 @@ class user_model extends MY_Model
             } else {
                 $orderdata = array(
                     'id' => array(        #字段名
-                        'table' => "article",
+                        'table' => "users",
                         'orderby' => 'desc'
                     ),
                 );

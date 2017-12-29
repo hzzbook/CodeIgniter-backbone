@@ -170,7 +170,6 @@
                     $('#imghead').val(res.data.cover);
                     $('#description').html(res.data.descr);
                     editor.html(res.data.content);
-                    // getcategory(res.data.cateid);
                 }
             }, 'json');
     }
@@ -181,6 +180,7 @@
             url:"/hzzadmin/__Controller__/__Function__Update",
             data:$("#datares").serialize(),
             type:"post",
+            dataType: 'json',
             success:function(data){//ajax返回的数据
                 if (data.status=='false')
                 {

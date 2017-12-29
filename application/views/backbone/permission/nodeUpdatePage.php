@@ -171,6 +171,7 @@
             url:"/hzzadmin/<?echo $slider_tag;?>/nodeUpdate",
             data:$("#datares").serialize(),
             type:"post",
+            dataType: 'json',
             success:function(data){//ajax返回的数据
                 if (data.status=='false')
                 {

@@ -1,3 +1,4 @@
+<script src="/adminasset/js/jquery-1.11.3.min.js"></script>
 <style>
     .form-input-mid{
         width: 250px;
@@ -38,15 +39,17 @@
 <script src="/adminasset/uploadify/jquery.uploadify.js" type="text/javascript"></script>
 
 <div class="mainWrap">
-    <h4 class="cont_title"><span>编辑数据<a href="/b_cms_index.html" class="button">返回</a></span></h4>
+    <h4 class="cont_title">
+        <span>添加权限结点    <a href="javascript:void(0)" id="backbtn" class="button">返回</a></span>
+
+    </h4>
     <div class="row" style="margin-top:20px;padding-bottom: 40px">
         <form id="datares" method="post" class="form-horizontal">
-            <input type="hidden" name="token" value="<?php echo $token; ?>" >
-            <input type="hidden" name="id" id="id" value="<?php echo $id; ?>" >
+            <input type="hidden" name="token" id="token" value="<?php echo $token; ?>" >
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">权限结点名称：</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-input-mid" id="node_name" placeholder="名称" name="node_name">
+                    <input type="text" class="form-input-mid" id="inputEmail3" placeholder="名称" name="node_name">
                 </div>
             </div>
             <div class="form-group">
@@ -61,6 +64,9 @@
                 <label for="inputPassword3" class="col-sm-2 control-label">结点类型：</label>
                 <div class="col-sm-10">
                     <select class="form-select" name="node_type" id="node_type">
+                        <option value="1">菜单</option>
+                        <option value="2">动作</option>
+                        <option value="3">页面</option>
                     </select>
                 </div>
             </div>
@@ -88,7 +94,7 @@
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">结点地址：</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-input-large" id="node_url" name="node_url"  placeholder="结点地址">
+                    <input type="text" class="form-input-large" id="nodeurl" name="node_url"  placeholder="结点地址">
                 </div>
             </div>
             <div class="form-group">
@@ -117,74 +123,42 @@
 <script src="/adminasset/js/layer/layer.js"></script>
 <script id="catelist" type="text/html">
     {{# for(var i = 0, len = d.length; i < len; i++){ }}
-    {{# if (d.cateid == d[i].id) { }}
-    <option selected="selected" value='{{d[i].id}}'>{{ d[i].node_name }}</option>
-    {{# } else { }}
     <option value='{{d[i].id}}'>{{ d[i].node_name }}</option>
-    {{# } }}
-
     {{# } }}
 </script>
 <script>
-    function getcategory(cateid) {
-        $.post('/hzzadmin/<?php echo $slider_tag;?>/nodeLevel', {
+    function getcategory() {
+        $.post('/start/cates', {
             },
             function (res) {
-                res.cateid = cateid;
+
                 var gettpl = document.getElementById('catelist').innerHTML;
                 laytpl(gettpl).render(res, function (html) {
                     document.getElementById('cate').innerHTML = html;
                 });
+
             }, 'json');
     }
-    function gettype($id) {
-        var jsonObj = {data:[{id:'1', name: '菜单'}, {id:'2', name: '动作'}, {id:'3', name: '页面'}, {id:'9', name: '其他'}]};
-        html = '';
-        for (var i=0; i < jsonObj.data.length; i++) {
-            if ($id == jsonObj.data[i].id) {
-                html += '<option value="'+jsonObj.data[i].id+'" selected="selected">'+jsonObj.data[i].name+'</option>';
-            } else {
-                html += '<option value="' + jsonObj.data[i].id + '">' + jsonObj.data[i].name + '</option>';
-            }
-        }
-        $('#node_type').html(html);
-    }
-    function article() {
-        $.post('/hzzadmin/<?echo $slider_tag;?>/node', {
-                id: $('#id').val()
-            },
-            function (res) {
-                if (res.status != 'false') {
-                    $('#node_name').val(res.data.node_name);
-                    $('#node_url').val(res.data.node_url);
-                    $('#cont').val(res.data.cont);
-                    $('#func').val(res.data.func);
-                    $('#ordernum').val(res.data.ordernum);
-                    getcategory(res.data.p_id);
-                    gettype(res.data.node_type);
-                }
-            }, 'json');
-    }
-    article();
+    getcategory();
     $('#save').bind('click', function(){
         $.ajax({
-            url:"/hzzadmin/<?echo $slider_tag;?>/nodeUpdate",
+            url:"/start/templateUpdate",
             data:$("#datares").serialize(),
             type:"post",
             dataType: 'json',
-            success:function(data){//ajax返回的数据
-                if (data.status=='false')
-                {
-                    if (data.code == '869'){
-                        $('#token').val(data.token);
-                    }
-                } else  {
-                    layer.msg('数据修改成功');
-                    window.location.href = '/b_<?echo $slider_tag;?>_nodesPage.html';
+            success:function(data){//ajax返回的权限结点
+                if (data.status == 'true') {
+                    layer.msg('修改成功');
+                    window.history.back(-1);
+                } else {
+                    $('#token').val(data.token);
+                    layer.msg(data.info);
                 }
             }
         });
     })
-
+    $('#backbtn').bind('click', function(){
+        window.history.back(-1);
+    })
 </script>
 

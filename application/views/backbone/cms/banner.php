@@ -54,7 +54,7 @@
             title: $('#title').val()
         }, function(res){
             if (res.status !='false'){
-                console.log(res);
+
                 var gettpl = document.getElementById('demo').innerHTML;
                 laytpl(gettpl).render(res, function(html){
                     document.getElementById('datatable').innerHTML = html;

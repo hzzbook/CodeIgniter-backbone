@@ -1,17 +1,29 @@
+<script src="/adminasset/js/jquery-1.11.3.min.js"></script>
+
 <link rel="stylesheet" href="/adminasset/css/user_return.css">
 <script src="/adminasset/js/laydate/laydate.js"></script>
 <div class="mainWrap">
-    <h4 class="cont_title"><span>管理员列表</span></h4>
+    <h4 class="cont_title"><span>列表</span></h4>
 
     <div class="return_box">
         <div class="search_box">
             <div class="text_inputs">
-                <a href="/b_systems_adminAddPage.html" class="button" style="background: #ffcc33">添加管理员</a>
-                <span>用户名：</span>
-                <input type="text" id="username" placeholder="用户名">
+                <a href="/start/templateAddPage" class="button" style="background: #ffcc33">添加页面</a>
+                <span>标题：</span>
+                <input type="text" id="title" placeholder="文章标题">
+                <span>分类：</span>
+                <select name="cate" id="cate">
+                    <option value="">未选择</option>
+                </select>
+                <span>状态：</span>
+                <select name="status" id="status">
+                    <option value="">未选择</option>
+                    <option value="1">已发布</option>
+                    <option value="0">删除</option>
+                </select>
             </div>
             <div class="laydate">
-                <span>申请时间：</span>
+                <span>发布时间：</span>
                 <input id="start" class="laydate-icon">
 
                 <span>结束时间：</span>
@@ -29,9 +41,9 @@
 <script>
     var start = {
         elem: '#start',
-        format: 'YYYY/MM/DD hh:mm:ss',
-        min: laydate.now(),
-        max: '2099-06-16 23:59:59',
+        format: 'YYYY/MM/DD',
+        //min: laydate.now(),
+        max: laydate.now(),
         istime: true,
         istoday: false,
         choose: function (datas) {
@@ -41,9 +53,9 @@
     };
     var end = {
         elem: '#end',
-        format: 'YYYY/MM/DD hh:mm:ss',
-        min: laydate.now(),
-        max: '2099-06-16 23:59:59',
+        format: 'YYYY/MM/DD',
+        //min: laydate.now(),
+        max: laydate.now(),
         istime: true,
         istoday: false,
         choose: function (datas) {
@@ -56,31 +68,34 @@
 <script src="/adminasset/vendor/laypage/laypage.js"></script>
 <script src="/adminasset/vendor/laytpl.js"></script>
 <script src="/adminasset/js/layer/layer.js"></script>
+<script id="catelist" type="text/html">
+    <option value=''>无分类</option>
+    {{# for(var i = 0, len = d.data.length; i < len; i++){ }}
+    <option value='{{d.data[i].id}}'>{{ d.data[i].title }}</option>
+    {{# } }}
+</script>
 <script id="demo" type="text/html">
     <table class="table table-bordered table-hover">
         <thead>
         <tr>
-            <td>用户名</td>
-            <td>手机号</td>
-            <td>邮箱</td>
-            <td>备注</td>
-            <td>状态</td>
+            <td>标题</td>
+            <td>分类</td>
+            <td>描述</td>
+            <td>发布时间</td>
             <td>操作</td>
         </tr>
         </thead>
         <tbody>
         {{# for(var i = 0, len = d.data.length; i < len; i++){ }}
         <tr>
-            <td>{{ d.data[i].username }}</td>
-            <td>{{ d.data[i].mobile }}</td>
-            <td>{{ d.data[i].email }}</td>
-            <td>{{ d.data[i].rolename }}</td>
-            <td>{{ d.data[i].status }}</td>
+            <td>{{ d.data[i].title }}</td>
+            <td>{{ d.data[i].catename }}</td>
+            <td>{{ d.data[i].summary }}</td>
+            <td>{{ d.data[i].logtime }}</td>
             <td>
-                {{# if (d.data[i].id !=1){}}
-                <a class="button" href="/b_systems_adminUpdatePage.html?id={{d.data[i].id}}">编辑</a>
+                <a class="button" href="/b_cms_articleUpdatePage.html?id={{d.data[i].id}}">编辑</a>
+                <!--<a class="button" href="/b_cms_articleedit.html?id={{d.data[i].id}}">浏览</a>-->
                 <a class="button deleteArticle" data="{{d.data[i].id}}" href="javascript:void(0)" >删除</a>
-                {{#}}}
             </td>
         </tr>
         {{# } }}
@@ -88,10 +103,25 @@
     </table>
 </script>
 <script>
+    /*function getcategory() {
+        $.post('/start/templates', {
+            },
+            function (res) {
+                var gettpl = document.getElementById('catelist').innerHTML;
+                laytpl(gettpl).render(res, function (html) {
+                    document.getElementById('cate').innerHTML = html;
+                });
+            }, 'json');
+    }
+    getcategory();*/
     function demo(curr){
-        $.post('/hzzadmin/systems/admins', {
+        $.post('/start/templates', {
             page: curr || 1, //向服务端传的参数，此处只是演示
-            title: $('#title').val()
+            title: $('#title').val(),
+            cate: $('#cate').val(),
+            status: $('#status').val(),
+            start: $('#start').val(),
+            end: $('#end').val()
         }, function(res){
             if (res.status !='false'){
                 var gettpl = document.getElementById('demo').innerHTML;
@@ -117,17 +147,18 @@
         }, 'json');
     };
     demo();
+
     $('#searchbtn').bind('click', function(){
         demo();
     })
 
     $(document).on("click", ".deleteArticle", function () {
         $id = $(this).attr('data');
-        layer.msg('你确定删除该管理员？', {
+        layer.msg('你确定删除？', {
             time: 0 //不自动关闭
             ,btn: ['确定删除', '取消']
             ,yes: function(index){
-                $.post('/hzzadmin/systems/adminDelete', {
+                $.post('/hzzadmin/cms/articleDelete', {
                     id: $id
                 }, function(res){
                     if (res.status == 'true')
@@ -140,4 +171,5 @@
             }
         });
     });
+
 </script>

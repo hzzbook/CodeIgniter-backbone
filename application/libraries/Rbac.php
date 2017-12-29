@@ -140,7 +140,7 @@ class Rbac
         }
         $string = $this->_CI->session->userdata('authlist');     #权限列表
         if (strpos($string, $router)  === false ){
-            if ($router == 'backbone/index') {
+            if ($router == 'backbone/index' || $router == 'backbone') {
 
             } else {
             if ($this->_CI->input->is_ajax_request()) {

@@ -97,7 +97,7 @@ class permission extends  Admin_Controller
     {
         $input = $this->input->post();
         $this->load->model('rbac/node_model', 'node_model');
-        $nodes = $this->node_model->nodes($input);
+        $nodes = $this->node_model->lists($input);
         if ($nodes['status'] == true) {
             $level = $this->node_model->nodeLevel();
             $top = array();

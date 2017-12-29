@@ -181,6 +181,7 @@
             url:"/hzzadmin/auction/convertUpdate",
             data:$("#datares").serialize(),
             type:"post",
+            dataType: 'json',
             success:function(data){//ajax返回的数据
                 if (data.status=='false')
                 {

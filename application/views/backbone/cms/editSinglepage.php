@@ -113,6 +113,7 @@
             url:"/hzzadmin/cms/contentUpdate",
             data:$("#datares").serialize(),
             type:"post",
+            dataType: 'json',
             success:function(data){//ajax返回的数据
                 if (data.status=='false')
                 {
@@ -120,7 +121,7 @@
                         $('#token').val(data.token);
                     }
                 } else  {
-                    layer.msg('文章修改成功');
+                    layer.msg('修改成功');
                     window.history.back(-1);
                 }
             }

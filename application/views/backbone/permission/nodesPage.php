@@ -9,23 +9,9 @@
                 <a href="/b_permission_nodeAddPage.html" class="button" style="background: #ffcc33">添加权限结点</a>
                 <span>标题：</span>
                 <input type="text" id="title" placeholder="权限结点标题">
-                <span>分类：</span>
-                <select name="cate" id="cate">
-                    <option value="">未选择</option>
-                </select>
-                <span>状态：</span>
-                <select name="status" id="status">
-                    <option value="">未选择</option>
-                    <option value="1">已发布</option>
-                    <option value="0">删除</option>
-                </select>
+
             </div>
             <div class="laydate">
-                <span>发布时间：</span>
-                <input id="start" class="laydate-icon">
-
-                <span>结束时间：</span>
-                <input id="end" class="laydate-icon">
                 <button id="searchbtn" class="button">搜索</button>
             </div>
         </div>
@@ -36,34 +22,7 @@
     </div>
 </div>
 </div>
-<script src="/adminasset/js/laydate/laydate.js"></script>
-<script>
-    var start = {
-        elem: '#start',
-        format: 'YYYY/MM/DD',
-        //min: laydate.now(),
-        max: laydate.now(),
-        istime: true,
-        istoday: false,
-        choose: function (datas) {
-            end.min = datas; //开始日选好后，重置结束日的最小日期
-            end.start = datas //将结束日的初始值设定为开始日
-        }
-    };
-    var end = {
-        elem: '#end',
-        format: 'YYYY/MM/DD',
-        //min: laydate.now(),
-        max: laydate.now(),
-        istime: true,
-        istoday: false,
-        choose: function (datas) {
-            start.max = datas; //结束日选好后，重置开始日的最大日期
-        }
-    };
-    laydate(start);
-    laydate(end);
-</script>
+
 <script src="/adminasset/vendor/laypage/laypage.js"></script>
 <script src="/adminasset/vendor/laytpl.js"></script>
 <script src="/adminasset/js/layer/layer.js"></script>

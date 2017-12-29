@@ -103,7 +103,7 @@
             page: curr || 1, //向服务端传的参数，此处只是演示
             cate: $('#cate').val()
         }, function(res){
-            console.log(res);
+
             if (res.status !='false'){
                 var gettpl = document.getElementById('demo').innerHTML;
                 laytpl(gettpl).render(res, function(html){

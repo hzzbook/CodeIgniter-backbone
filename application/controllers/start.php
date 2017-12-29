@@ -231,5 +231,285 @@ class start extends MY_Controller
     }
 
 
+    /************************管理后台*********************/
+    public function display($view, $data)
+    {
+        $this->load->view('backbone/common/header', $data);
+        $this->load->view($view, $data);
+    }
+
+    public function templates()
+    {
+        $input = $this->input->post();
+        if (!isset($input['status']) || $input['status'] == ''){
+            $input['status'] = 1;
+        }
+        $this->load->model('content/friendly_model', 'friendly_model');
+        $data = $this->friendly_model->lists($input);
+        echo urldecode(json_encode($data));
+    }
+
+    public function template()
+    {
+        $input = $this->input->post();
+        $this->load->model('content/friendly_model', 'friendly_model');
+        $data = $this->friendly_model->item('id', $input['id']);
+        echo urldecode(json_encode($data));
+    }
+
+    public function templatesPage()
+    {
+        $data = array();
+        $this->display('start/admin/templatesPage', $data);
+    }
+
+    public function templateAddPage()
+    {
+        $this->load->library('formtoken');
+        $token = $this->formtoken->create('template');
+
+        $data = array(
+            'token'     => $token
+        );
+        $this->display('start/admin/templateAddPage', $data);
+    }
+
+    public function addShow($filed)
+    {
+
+        $string = '';
+        foreach ($filed as $key => $value) {
+            switch($value['type']) {
+                case 'text':
+                    break;
+                case 'longtext':
+                    break;
+                case 'image':
+                    break;
+                case 'image_group':
+                    break;
+                case 'select':
+                    break;
+                case 'single':
+                    break;
+                case 'multi':
+                    break;
+                case 'fulltext':
+                    break;
+            }
+        }
+    }
+
+    public function templateAddPage2()
+    {
+        $this->load->library('formtoken');
+        $token = $this->formtoken->create('template');
+
+        $filed = array(
+            'name' => array(
+                'type' => 'text',
+                'title' => "标题",
+            ),
+            'cover' => array(
+                'type' => 'image',
+                'title' => "标题",
+            ),
+            'country' => array(
+                'type' => 'select',
+                'title' => "标题",
+            ),
+            'single' => array(
+                'type' => 'single',
+                'title' => "标题",
+                'data' => array(
+                    array(
+                        'val' => 's1',
+                        'label' => '单选1'
+                    ),
+                    array(
+                        'val' => 's2',
+                        'label' => '单选2'
+                    ),
+                    array(
+                        'val' => 's3',
+                        'label' => '单选3'
+                    ),
+                )
+            ),
+                'multi' => array(
+                    'type' => 'multi',
+                    'title' => "标题",
+                    'data' => array(
+                        array(
+                            'val' => 'm1',
+                            'label' => '多项1'
+                        ),
+                        array(
+                            'val' => 'm2',
+                            'label' => '多项2'
+                        ),
+                        array(
+                            'val' => 'm3',
+                            'label' => '多项3'
+                        ),
+
+                    ),
+                ),
+                'fulltext' => array(
+                    'type' => 'fulltext',
+                    'title' => "标题",
+                )
+        );
+
+
+        $data = array(
+            'token'     => $token
+        );
+        $this->display('start/admin/templateAddPage2', $data);
+    }
+
+    public function templateAdd()
+    {
+        $input = $this->input->post();
+
+        var_dump($input);
+        var_dump($input['choose_multi']);
+        exit;
+        $this->load->library('formtoken');
+        $token =  $this->formtoken->check('template', $input['token']);
+        if ($token['status'] == 'false')
+        {
+            $back = array(
+                'status' => 'false',
+                'code'   => '868',
+                'info'   => urlencode('表单token失效'),
+                'token'  => $token['token']
+            );
+            echo urldecode(json_encode($back)); exit;
+        }
+        unset($input['token']);
+
+        $checkForm = array(
+            'title',  'url'
+        );
+        if ($this->formtoken->blank($checkForm, $input) == false)
+        {
+            $back = array(
+                'status' => 'false',
+                'code'   => '869',
+                'info'   => urldecode('确认必填项填写完毕')
+            );
+            echo urldecode(json_encode($back)); exit;
+        }
+        $this->load->model('content/friendly_model', 'friendly_model');
+        $res = $this->friendly_model->itemAdd($input);
+        if ($res == true)
+        {
+            $back = array(
+                'status' => 'true',
+                'code'   => '0',
+                'info'   => urldecode('添加成功'),
+                'id'     => $res
+            );
+            echo urldecode(json_encode($back));
+        } else {
+            $back = array(
+                'status' => 'false',
+                'code'   => '500',
+                'info'   => urldecode('添加失败')
+            );
+            echo urldecode(json_encode($back));
+        }
+    }
+
+    public function templateUpldatePage()
+    {
+        $id = $this->input->get('id');
+
+        $this->load->library('formtoken');
+        $token = $this->formtoken->create('templateUpldate');
+        $data = array(
+            'token'     => $token,
+            'id'        => $id
+        );
+        $this->display('start/admin/templateUpldatePage', $data);
+    }
+
+    public function templateUpdate()
+    {
+        $input = $this->input->post();
+        $this->load->library('formtoken');
+        $token =  $this->formtoken->check('templateUpldate', $input['token']);
+        if ($token === true)
+        {
+            $back = array(
+                'status' => 'false',
+                'code'   => '868',
+                'info'   => urlencode('表单token失效'),
+                'token'  => $token
+            );
+            echo urldecode(json_encode($back)); exit;
+        }
+        unset($input['token']);
+
+        $checkForm = array(
+
+        );
+        if ($this->formtoken->blank($checkForm, $input) == false)
+        {
+            $back = array(
+                'status' => 'false',
+                'code'   => '869',
+                'info'   => urldecode('确认必填项填写完毕')
+            );
+            echo urldecode(json_encode($back)); exit;
+        }
+        $this->load->model('content/friendly_model', 'friendly_model');
+
+        $res = $this->friendly_model->itemUpdate($input, $input['id']);
+        if ($res == true)
+        {
+            $back = array(
+                'status' => 'true',
+                'code'   => '0',
+                'info'   => urldecode('修改成功'),
+            );
+            echo urldecode(json_encode($back));
+        } else {
+            $back = array(
+                'status' => 'false',
+                'code'   => '500',
+                'info'   => urldecode('添加失败')
+            );
+            echo urldecode(json_encode($back));
+        }
+    }
+
+    public function templateDelete()
+    {
+        $input = $this->input->post();
+        $this->load->model('content/friendly_model', 'friendly_model');
+        $res = $this->friendly_model->itemDelete($input['id']);
+        if ($res == true)
+        {
+            $back = array(
+                'status' => 'true',
+                'code'   => '0',
+                'info'   => urldecode('删除成功'),
+                'id'     => $res
+            );
+            echo urldecode(json_encode($back));
+        } else {
+            $back = array(
+                'status' => 'false',
+                'code'   => '500',
+                'info'   => urldecode('删除失败')
+            );
+            echo urldecode(json_encode($back));
+        }
+    }
+
+
+
 
 }

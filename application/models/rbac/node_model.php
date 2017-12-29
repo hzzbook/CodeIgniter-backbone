@@ -11,6 +11,13 @@ class node_model extends Temp_model
 {
     var $table = 'rbac_node';
 
+    var $where = array(
+        'title' => array(
+            'filed' => 'node_name',
+            'expression' => 'like'
+        ),
+    );
+
     public function nodeLevel()
     {
         $sql = " select * from "
