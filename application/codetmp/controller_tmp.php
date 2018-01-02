@@ -1,6 +1,6 @@
 <?php
 
-class __Controller__ extends MY_Controller
+class __Controller__ extends Admin_Controller
 {
 
 #-------------header----------------#	

@@ -276,7 +276,6 @@ class start extends MY_Controller
 
     public function addShow($filed)
     {
-
         $string = '';
         foreach ($filed as $key => $value) {
             switch($value['type']) {
@@ -317,6 +316,20 @@ class start extends MY_Controller
             'country' => array(
                 'type' => 'select',
                 'title' => "标题",
+                'data' => array(
+                    array(
+                        'val' => 's1',
+                        'label' => '单选1'
+                    ),
+                    array(
+                        'val' => 's2',
+                        'label' => '单选2'
+                    ),
+                    array(
+                        'val' => 's3',
+                        'label' => '单选3'
+                    ),
+                )
             ),
             'single' => array(
                 'type' => 'single',
@@ -361,8 +374,11 @@ class start extends MY_Controller
                 )
         );
 
+        $this->load->helper('form');
+        $filed_string = filed_show($filed);
 
         $data = array(
+            'filed_string' => $filed_string,
             'token'     => $token
         );
         $this->display('start/admin/templateAddPage2', $data);

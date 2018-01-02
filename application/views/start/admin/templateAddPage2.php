@@ -45,7 +45,12 @@
     <div class="row" style="margin-top:20px;padding-bottom: 40px">
         <form id="datares" method="post" class="form-horizontal">
             <input type="hidden" name="token" id="token" value="<?php echo $token; ?>" >
-            <div class="form-group">
+            <?php
+                #var_dump($filed);
+                echo $filed_string;
+
+            ?>
+            <!--<div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">文本：</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-input-mid" id="inputEmail3" placeholder="文本" name="name">
@@ -120,7 +125,7 @@
                 <div class="col-sm-10">
                     <textarea class="form-textarea" name="content" id="content"></textarea>
                 </div>
-            </div>
+            </div>-->
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
@@ -137,7 +142,7 @@
 <script>
     <?php $timestamp = time();?>
     $(function() {
-        $('#file_upload').uploadify({
+        $('#cover_upload').uploadify({
             'fileSizeLimit' : '1MB',
             'fileTypeExts' : '*.gif; *.jpg; *.png',
             'formData'     : {
@@ -149,27 +154,8 @@
             'width' : 200,
             'queueproess'    : false,
             'onUploadSuccess' : function(file, data, response){
-                $('#headimg').val(data);
-                $('#headimg2').attr('src',data);
-            }
-        });
-    });
-
-    $(function() {
-        $('#file_upload2').uploadify({
-            'fileSizeLimit' : '1MB',
-            'fileTypeExts' : '*.gif; *.jpg; *.png',
-            'formData'     : {
-                'timestamp' : '<?php echo $timestamp;?>',
-                'token'     : '<?php echo md5('unique_salt' . $timestamp);?>'
-            },
-            'swf'      : '/adminasset/uploadify/uploadify.swf',
-            'uploader' : '/adminasset/uploadify/uploadify.php',
-            'width' : 200,
-            'queueproess'    : false,
-            'onUploadSuccess' : function(file, data, response){
-                $('#imghead').val(data);
-                $('#imghead2').attr('src',data);
+                $('#cover').val(data);
+                $('#cover_src').attr('src',data);
             }
         });
     });

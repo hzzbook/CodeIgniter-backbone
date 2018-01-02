@@ -586,31 +586,31 @@ class Temp_model extends MY_Model
             $where = " where ";
         }
 
-        $sql = "select * from "
-            . $this->db->dbprefix('test_item');   #获取数据表中所有数据
+        /*  $sql = "select * from "
+             . $this->db->dbprefix('test_item');   #获取数据表中所有数据
+
+       $sql = "select item.*, cate.catename from "
+             . $this->db->dbprefix('test_item'). ' item, '
+             . $this->db->dbprefix('test_cate'). ' cate '
+             . " where item.cateid = cate.id ";     #获取两个关联表的所有数据，结果相当于join
 
         $sql = "select item.*, cate.catename from "
-            . $this->db->dbprefix('test_item'). ' item, '
-            . $this->db->dbprefix('test_cate'). ' cate '
-            . " where item.cateid = cate.id ";     #获取两个关联表的所有数据，结果相当于join
+             . $this->db->dbprefix('test_item'). ' as item '
+             . ' left join '
+             . $this->db->dbprefix('test_cate'). ' as cate '
+             . ' on item.cateid= cate.id';         #使用左连接操作,   如果cate表中无相应的分类id数据，也同样可以查出数据，假设删除了分类，分类
 
-        /*$sql = "select item.*, cate.catename from "
-            . $this->db->dbprefix('test_item'). ' as item '
-            . ' left join '
-            . $this->db->dbprefix('test_cate'). ' as cate '
-            . ' on item.cateid= cate.id';         #使用左连接操作,   如果cate表中无相应的分类id数据，也同样可以查出数据，假设删除了分类，分类
+         $sql = "select item.*, cate.catename from "
+             . $this->db->dbprefix('test_item'). ' as item '
+             . ' join '
+             . $this->db->dbprefix('test_cate'). ' as cate '
+             . ' on item.cateid= cate.id';         #使用连接操作,   如果cate表中无相应的分类id数据，就查不出数据
 
-        $sql = "select item.*, cate.catename from "
-            . $this->db->dbprefix('test_item'). ' as item '
-            . ' join '
-            . $this->db->dbprefix('test_cate'). ' as cate '
-            . ' on item.cateid= cate.id';         #使用连接操作,   如果cate表中无相应的分类id数据，就查不出数据
-
-        $sql = "select item.*, cate.catename from "
-            . $this->db->dbprefix('test_item'). ' as item '
-            . ' right join '
-            . $this->db->dbprefix('test_cate'). ' as cate '
-            . ' on item.cateid= cate.id';         #使用右连接操作,   如果cate表中无相应的分类id数据，就查不出数据*/
+         $sql = "select item.*, cate.catename from "
+             . $this->db->dbprefix('test_item'). ' as item '
+             . ' right join '
+             . $this->db->dbprefix('test_cate'). ' as cate '
+             . ' on item.cateid= cate.id';         #使用右连接操作,   如果cate表中无相应的分类id数据，就查不出数据*/
         $sql = $this->linkSql($input);
         #$sql = $this->leftSql($input);
         $tableName = $this->alias == '' ? $this->db->dbprefix($this->table):$this->alias;

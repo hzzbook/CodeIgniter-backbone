@@ -42,60 +42,9 @@
     <div class="row" style="margin-top:20px;padding-bottom: 40px">
         <form id="datares" method="post" class="form-horizontal">
             <input type="hidden" name="token" id="token" value="<?php echo $token; ?>" >
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">商品名称：</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-input-mid" id="title" name="name" placeholder="商品名称">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">市场价格：</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-input-mid" id="market" name="market" >
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">价格：</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-input-mid" id="price" name="price" >
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">库存：</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-input-mid" id="stock" name="stock" >
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">积分数：</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-input-mid" id="credit" name="credit" >
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">商品类型：</label>
-                <div class="col-sm-10">
-                    <select name="type">
-                        <option value="1">实体商品</option>
-                        <option value="2">虚拟商品</option>
-                        <option value="3">抽奖机会</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">描述：</label>
-                <div class="col-sm-10">
-                    <textarea class="form-textarea" name="descr" id="description"></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">封面图片：</label>
-                <div class="col-sm-10">
-                    <input id="file_upload" name="file_upload" type="file" multiple="true">
-                    <input type="hidden" name="cover" id="headimg" value="">
-                    <img width="200" height="200" src="" id="imghead" />
-                </div>
-            </div>
+            <?php
+            echo $filed_string;
+            ?>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <a id="save" class="btn btn-default" href="javascript:void(0)">保存</a>

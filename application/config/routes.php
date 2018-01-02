@@ -38,7 +38,7 @@
 |
 */
 
-$route['index.html'] = "welcome";
+$route['index.html'] = "frontend";
 $route['news-(:any).html'] = "cms/article/$1";
 $route['c_(:any).html'] = "cms/articlelist/$1";
 $route['products.html']   = "product/index";
@@ -57,7 +57,7 @@ $route['backendin.html']     = "hzzadmin/backbone";
 $route['backendlogin.html']     = "hzzadmin/admin/login";
 $route['b_(:any)_(:any).html'] = "hzzadmin/$1/$2";
 
-$route['default_controller'] = "welcome";
+$route['default_controller'] = "frontend";
 $route['404_override'] = '';
 
 

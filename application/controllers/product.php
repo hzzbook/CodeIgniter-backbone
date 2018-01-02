@@ -43,7 +43,15 @@ class product extends frontbase
         $res = $this->model->products($data);
 
         $this->load->library('Pageclass');
-        $Pageclass = new Pageclass('?', $res['sum'], $page, $nums);
+        $get = $this->input->get();
+        if (isset($get[$page]) && $get[$page] != '')
+            unset($get[$page]);
+        if ($get != false && count($get) >= 1)
+            $getstring = http_build_query($get).'&';
+        else
+            $getstring = '';
+
+        $Pageclass = new Pageclass('?'.$getstring, $res['sum'], $page, $nums);
         $pagestring = $Pageclass->show();
         $data = array(
             'nav_key' => 'product',

@@ -57,13 +57,15 @@
 
     public function TemplateUpdatePage()
     {
+        $id = $this->input->get('id');
         $classinfo = $this->backconfig();
         $this->load->library('formtoken');
         $token = $this->formtoken->create('TemplateUpdate');
         $nodeData = array(
             'slider_tag' => $classinfo['class'],
             'nav_tag' => $classinfo['function'],
-            'token' => $token
+            'token' => $token,
+            'id'    => $id,
         );
         $this->display('backbone/'.$classinfo['class'].'/'.$classinfo['function'], $nodeData);
     }
@@ -86,7 +88,7 @@
         unset($input['token']);
 
         $checkForm = array(
-            'title', 'cateid', 'content'
+            //'title', 'cateid', 'content'
         );
         if ($this->formtoken->blank($checkForm, $input) == false)
         {
@@ -137,7 +139,7 @@
         unset($input['token']);
 
         $checkForm = array(
-            'title', 'cateid', 'content'
+            //'title', 'cateid', 'content'
         );
 
         if ($this->formtoken->blank($checkForm, $input) == false)
