@@ -58,17 +58,14 @@
         });
     })
 
-
-    /*$("input.mainbtn").bind("click", function(){
+    $("input.mainbtn").bind("click", function(){
         $child = $(this).parent().next();
         if($(this).attr("checked")){    //删除
-            console.log('取消');
             $child.find('input').each(function(){
                 $(this).attr('checked',false);
             })
             $(this).attr('checked',false);
         } else {    //选中
-            console.log('选中');
             $child.find('input').each(function(){
                 $(this).prop('checked',true);
                 //$(this).attr('checked',true);
@@ -78,19 +75,11 @@
 
     });
 
-    //判断父节点是否选中
-    function isPchecked($this){
-        $pnode = $this.parent().prev().find('input');
-        if($pnode.attr('checked'))
-            return true;
-        else
-            return false;
-    }
     //判读兄弟结点是否选中
     function isAllchecked($this){
         $key = false;
         $this.siblings('input').each(function(){
-            if($(this).attr('checked')){
+            if($(this).is(':checked')){
                 $key = true;
             }
         })
@@ -99,29 +88,23 @@
 
     //判读自己是否选中
     function ischecked($this){
-        if($this.attr('checked')){
+        if ($this.is(':checked')){
+            return false;
+        } else {
             return true;
         }
-        else
-            return false;
     }
 
     $('input.childbtn').bind('click',function(){
-        $pnode = $(this).parent().prev().find('input');
-
-        if(isAllchecked($(this)) || ischecked($(this)) ){
-            console.log('取消');
-            if(!isPchecked($(this))){
-                $pnode.attr('checked',true);
+        $pnode = $(this).parent().prev().find('input').first();
+        if(ischecked($(this)) ){
+            if (!isAllchecked($(this))) {
+                $pnode.removeAttr("checked");
             }
         } else {
-            if(isPchecked($(this))){
-                console.log('选中');
-                $pnode.attr('checked',false);
-            }
+            $pnode.prop("checked",true);
         }
-    });*/
-
+    });
 
 
     $('#backbtn').bind('click', function(){

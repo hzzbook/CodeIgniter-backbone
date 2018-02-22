@@ -86,6 +86,8 @@ class admin_model extends Temp_Model
         if (isset($data['password']) && $data['password'] != '') {
             $admin = $this->admin($id);
             $data['password'] = $this->encrypt($data['password'], $admin['salt']);
+        } else {
+            unset($data['password']);
         }
         return $this->update($this->table, $data, $id);
     }

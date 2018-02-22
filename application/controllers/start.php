@@ -22,7 +22,6 @@ class start extends MY_Controller
         //$Weibologin_config = $this->config->item('Weibologin_config');
         include_once (APPPATH.'config/thirdpart.php');
         var_dump($Weibologin_config);
-
     }
 
     /**
@@ -388,9 +387,6 @@ class start extends MY_Controller
     {
         $input = $this->input->post();
 
-        var_dump($input);
-        var_dump($input['choose_multi']);
-        exit;
         $this->load->library('formtoken');
         $token =  $this->formtoken->check('template', $input['token']);
         if ($token['status'] == 'false')
@@ -406,7 +402,7 @@ class start extends MY_Controller
         unset($input['token']);
 
         $checkForm = array(
-            'title',  'url'
+
         );
         if ($this->formtoken->blank($checkForm, $input) == false)
         {

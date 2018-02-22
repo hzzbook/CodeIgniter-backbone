@@ -7,26 +7,10 @@
         <div class="search_box">
             <div class="text_inputs">
                 <a href="/b_permission_roleAddPage.html" class="button" style="background: #ffcc33">添加角色</a>
-                <span>标题：</span>
-                <input type="text" id="title" placeholder="角色标题">
-                <span>分类：</span>
-                <select name="cate" id="cate">
-                    <option value="">未选择</option>
-                </select>
-                <span>状态：</span>
-                <select name="status" id="status">
-                    <option value="">未选择</option>
-                    <option value="1">已发布</option>
-                    <option value="0">删除</option>
-                </select>
+
             </div>
             <div class="laydate">
-                <span>发布时间：</span>
-                <input id="start" class="laydate-icon">
 
-                <span>结束时间：</span>
-                <input id="end" class="laydate-icon">
-                <button id="searchbtn" class="button">搜索</button>
             </div>
         </div>
 
@@ -78,7 +62,6 @@
         <thead>
         <tr>
             <td>角色名称</td>
-            <td>角色状态</td>
             <td>操作</td>
         </tr>
         </thead>
@@ -86,12 +69,13 @@
         {{# for(var i = 0, len = d.data.length; i < len; i++){ }}
         <tr>
             <td>{{ d.data[i].rolename }}</td>
-            <td>{{ d.data[i].status }}</td>
 
             <td>
+                {{# if(d.data[i].id != 1){ }}
                 <a class="button" href="/b_<?php echo $slider_tag;?>_roleUpdatePage.html?id={{d.data[i].id}}">编辑</a>
                 <a class="button" href="/b_<?php echo $slider_tag;?>_authorizePage.html?id={{d.data[i].id}}">授权</a>
                 <a class="button deleteArticle" data="{{d.data[i].id}}" href="javascript:void(0)" >删除</a>
+                {{# }}}
             </td>
         </tr>
         {{# } }}
