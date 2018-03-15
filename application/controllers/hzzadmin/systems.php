@@ -426,4 +426,69 @@ class systems extends Admin_Controller
         $this->display('backbone/'.$classinfo['class'].'/'.$classinfo['function'], $data);
     }
 
+    public function resetPassword()
+    {
+        $data = array(
+            'slider_tag' => '',
+            'slider' => '',
+        );
+        $this->display('backbone/common/resetPassword', $data);
+    }
+
+    public function reset()
+    {
+        $old_password = $this->input->post('old_password');
+        $new_password = $this->input->post('new_password');
+        $check_password = $this->input->post('check_password');
+
+        if ($new_password == $old_password) {
+            $back = array(
+                'status' => 'false',
+                'code'   => '409',
+                'info'   => '新密码不能跟原密码一样'
+            );
+            echo json_encode($back);   exit;
+        }
+
+        if ($new_password == '' || $new_password != $check_password) {
+            $back = array(
+                'status' => 'false',
+                'code'   => '408',
+                'info'   => '新密码和确认密码不一致'
+            );
+            echo json_encode($back);   exit;
+        }
+
+        $userID = $this->session->userdata('hzzadminid');
+        $this->load->model('rbac/admin_model', 'adminmodel');
+        $adminInfo = $this->adminmodel->admin($userID);
+        $password_en = $this->adminmodel->encrypt($old_password, $adminInfo['salt']);
+        if ($adminInfo['password'] != $password_en) {
+            $back = array(
+                'status' => 'false',
+                'code'   => '405',
+                'info'   => '用户或密码不正确'
+            );
+            echo json_encode($back);   exit;
+        }
+
+        #$newPassword = $this->adminmodel->encrypt($new_password, $adminInfo['salt']);
+        $data = array(
+            'password' => $new_password
+        );
+
+        $result = $this->adminmodel->adminUpdate($data, $userID);
+        if ($result)
+        {
+            $back = array(
+                'status' => 'true',
+                'code'   => '0'
+            );
+            echo json_encode($back);   exit;
+        }
+
+
+
+    }
+
 }

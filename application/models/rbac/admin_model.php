@@ -92,6 +92,7 @@ class admin_model extends Temp_Model
         return $this->update($this->table, $data, $id);
     }
 
+
     public function encrypt($password, $salt)
     {
         return md5(md5($password, $salt).'I~@j');

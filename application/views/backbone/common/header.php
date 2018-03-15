@@ -88,16 +88,17 @@
     <div class="right_header fr">
         <div class="right_headerIcon"><i class="fa fa-th-large"></i></div>
         <ul class="right_headerNav disNone">
-            <li class="dropdown headerNav">
+            <li class="dropdown headerNav" style="margin-right:20px">
                 <a href="#" class="topbar_btn userName dropdown-toggle" data-toggle="dropdown"> <?php echo $adminInfo['nick'] ?> <i class="fa fa-caret-down"></i></a>
                 <ul class="dropdown-menu dropdown-menu-diy">
+                    <li class="dropdownNav"><a href="/backreset.html">重置密码</a></li>
                     <li class="dropdownNav"><a href="/hzzadmin/admin/logout">退出</a></li>
                 </ul>
             </li>
             <li class="dropdown headerNav">
                 <a href="#" class="topbar_btn dropdown-toggle" data-toggle="dropdown">帮助与文档 <i class="fa fa-caret-down"></i></a>
                 <ul class="dropdown-menu dropdown-menu-diy">
-                    <li class="dropdownNav"><a href="#">帮助与文档</a></li>
+                    <li class="dropdownNav"><a href="">帮助与文档</a></li>
                     <li class="dropdownNav"><a href="#">论坛</a></li>
                 </ul>
             </li>

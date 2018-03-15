@@ -54,6 +54,7 @@ $route['contact.html']   = "cms/contact";
 $route['culture.html']   = "cms/culture";
 
 $route['backendin.html']     = "hzzadmin/backbone";
+$route['backreset.html']     = "hzzadmin/systems/resetPassword";
 $route['backendlogin.html']     = "hzzadmin/admin/login";
 $route['b_(:any)_(:any).html'] = "hzzadmin/$1/$2";
 
