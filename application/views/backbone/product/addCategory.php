@@ -38,7 +38,7 @@
 <script src="/adminasset/uploadify/jquery.uploadify.js" type="text/javascript"></script>
 
 <div class="mainWrap">
-    <h4 class="cont_title"><span>添加产品分类</span></h4>
+    <h4 class="cont_title"><span>添加产品分类</span><a href="javascript:void(0)" id="backbtn" class="button">返回</a></h4>
     <div class="row" style="margin-top:20px;padding-bottom: 40px">
         <form id="datares" method="post" class="form-horizontal">
             <input type="hidden" name="token" id="token" value="<?php echo $token; ?>" >

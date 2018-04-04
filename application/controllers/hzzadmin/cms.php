@@ -13,7 +13,6 @@ class cms extends Admin_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('cms_model', 'model');
     }
 
     public function index()
@@ -78,7 +77,7 @@ class cms extends Admin_Controller
         unset($input['token']);
 
         $checkForm = array(
-            'title', 'cateid', 'content'
+            'title', 'cateid'
         );
         if ($this->formtoken->blank($checkForm, $input) == false)
         {
@@ -209,7 +208,8 @@ class cms extends Admin_Controller
     public function categorys()
     {
         $input = $this->input->post();
-        $data = $this->model->categorys($input);
+        $this->load->model('content/category_model');
+        $data = $this->category_model->lists($input);
         echo urldecode(json_encode($data));
     }
 
@@ -217,7 +217,8 @@ class cms extends Admin_Controller
     public function category()
     {
         $input = $this->input->post();
-        $data = $this->model->category($input['id']);
+        $this->load->model('content/category_model');
+        $data = $this->model->item('id', $input['id']);
         echo urldecode(json_encode($data));
     }
 
@@ -585,15 +586,16 @@ class cms extends Admin_Controller
         if (!isset($input['status']) || $input['status'] == ''){
             $input['status'] = 1;
         }
-
-        $data = $this->model->contents($input);
+        $this->load->model('content/content_model', 'model');
+        $data = $this->model->lists($input);
         echo urldecode(json_encode($data));
     }
 
     public function content()
     {
         $input = $this->input->post();
-        $data = $this->model->content($input['id']);
+        $this->load->model('content/content_model', 'model');
+        $data = $this->model->item('id', $input['id']);
         echo urldecode(json_encode($data));
     }
 
@@ -1316,15 +1318,16 @@ class cms extends Admin_Controller
         if (!isset($input['status']) || $input['status'] == ''){
             $input['status'] = 1;
         }
-
-        $data = $this->model->seos($input);
+        $this->load->model('content/seo_model', 'model');
+        $data = $this->model->lists($input);
         echo urldecode(json_encode($data));
     }
 
     public function seo()
     {
         $input = $this->input->post();
-        $data = $this->model->seo($input['id']);
+        $this->load->model('content/seo_model', 'model');
+        $data = $this->model->item('id', $input['id']);
         echo urldecode(json_encode($data));
     }
 

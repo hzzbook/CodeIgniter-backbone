@@ -1,59 +1,18 @@
-<style>
-    .form-input-mid{
-        width: 250px;
-        height: 30px;
-        margin: 0 5px;
-        text-indent: 5px;
-    }
-    .form-input-large{
-        width: 80%;
-        max-width:650px;
-        height: 30px;
-        margin: 0 5px;
-        text-indent: 5px;
-    }
-    .form-input-file {
-        text-indent: 5px;
-    }
-    .form-select {
-        width: 80%;
-        max-width:250px;
-        height: 30px;
-        margin: 0 5px;
-        text-indent: 5px;
-    }
-    .form-textarea {
-        width: 80%;
-        max-width:650px;
-        height: 80px;
-        margin: 0 5px;
-        text-indent: 5px;
-    }
-</style>
-<link rel="stylesheet" href="/asset/ked/themes/default/default.css" />
-<link rel="stylesheet" href="/asset/asset/ked/plugins/code/prettify.css" />
-<link rel="stylesheet" type="text/css" href="/adminasset/uploadify/uploadify.css">
-<script charset="utf-8" src="/asset/asset/ked/kindeditor.js"></script>
-<script charset="utf-8" src="/adminasset/uploadify/jquery.js"></script>
-<script src="/adminasset/uploadify/jquery.uploadify.js" type="text/javascript"></script>
-
 <div class="mainWrap">
-    <h4 class="cont_title">
-        <span>写产品    <a href="javascript:void(0)" id="backbtn" class="button">返回</a></span>
-
-    </h4>
+    <h4 class="cont_title"><span>编辑 <a href="javascript:void(0)" id="backbtn" class="button">返回</a></h4>
     <div class="row" style="margin-top:20px;padding-bottom: 40px">
         <form id="datares" method="post" class="form-horizontal">
-            <input type="hidden" name="token" id="token" value="<?php echo $token; ?>" >
+            <input type="hidden" name="token" value="<?php echo $token; ?>" >
+            <input type="hidden" name="id" id="id" value="<?php echo $id; ?>" >
             <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">产品名称：</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-input-mid" id="inputEmail3" placeholder="商品名称" name="name">
+                <label for="inputEmail3" class="col-sm-2 control-label">标题：</label>
+                <div class="col-sm-20">
+                    <input type="text" class="form-input-mid"  placeholder="标题" name="title" id="title">
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">产品分类：</label>
-                <div class="col-sm-10">
+                <label for="inputPassword3" class="col-sm-2 control-label">分类：</label>
+                <div class="col-sm-20">
                     <select class="form-select" name="cateid" id="cate">
 
                     </select>
@@ -61,26 +20,26 @@
             </div>
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">关键字：</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-input-large" name="keyword"  placeholder="关键字">
+                <div class="col-sm-20">
+                    <input type="text" class="form-input-large" name="keyword"  placeholder="关键字" id="keyword">
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">描述：</label>
-                <div class="col-sm-10">
-                    <textarea class="form-textarea" name="description"></textarea>
+                <div class="col-sm-20">
+                    <textarea class="form-textarea" name="description" id="description"></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">封面图片：</label>
                 <div class="col-sm-10">
                     <input id="file_upload" name="file_upload" type="file" multiple="true">
-                    <input type="hidden" name="cover" id="headimg" value="">
-                    <img width="200" height="200" src="" id="imghead" />
+                    <input type="hidden" name="cover" id="cover" value="">
+                    <img width="200" height="200" src="" id="cover_img" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">产品描述：</label>
+                <label for="inputPassword3" class="col-sm-2 control-label">内容：</label>
                 <div class="col-sm-10">
                     <textarea class="form-textarea" name="content" id="content"></textarea>
                 </div>
@@ -99,7 +58,12 @@
 <script src="/adminasset/js/layer/layer.js"></script>
 <script id="catelist" type="text/html">
     {{# for(var i = 0, len = d.data.length; i < len; i++){ }}
+
+    {{# if (d.cateid == d.data[i].id) { }}
+    <option selected="selected" value='{{d.data[i].id}}'>{{ d.data[i].title }}</option>
+    {{# } else { }}
     <option value='{{d.data[i].id}}'>{{ d.data[i].title }}</option>
+    {{# } }}
     {{# } }}
 </script>
 <script type="text/javascript">
@@ -117,8 +81,8 @@
             'width' : 200,
             'queueproess'    : false,
             'onUploadSuccess' : function(file, data, response){
-                 $('#headimg').val(data);
-                 $('#imghead').attr('src',data);
+                $('#headimg').val(data);
+                $('#imghead').attr('src',data);
             }
         });
     });
@@ -134,36 +98,53 @@
     });
 </script>
 <script>
-    function getcategory() {
-        $.post('/hzzadmin/product/categorys', {
+    function getcategory(cateid) {
+        $.post('/hzzadmin/cms/categorys', {
             },
             function (res) {
+                res.cateid = cateid;
                 var gettpl = document.getElementById('catelist').innerHTML;
                 laytpl(gettpl).render(res, function (html) {
                     document.getElementById('cate').innerHTML = html;
                 });
             }, 'json');
     }
-    getcategory();
+    function article() {
+        $.post('/hzzadmin/cms/article', {
+                id: $('#id').val()
+            },
+            function (res) {
+                if (res.status != 'false') {
+                    $('#title').val(res.data.title);
+                    $('#keyword').val(res.data.keyword);
+                    $('#description').val(res.data.description);
+                    $('#cover').val(res.data.cover);
+                    $('#cover_img').attr('src', res.data.cover);
+                    // $('#content').html(res.data.content);
+                    editor.html(res.data.content);
+                    getcategory(res.data.cateid);
+                }
+            }, 'json');
+    }
+    article();
     $('#save').bind('click', function(){
         $('#content').val(editor.html());
         $.ajax({
-            url:"/hzzadmin/product/addArticleDO",
+            url:"/hzzadmin/cms/articleUpdate",
             data:$("#datares").serialize(),
             type:"post",
             dataType: 'json',
             success:function(data){//ajax返回的数据
-                if (data.status == 'true') {
-                    layer.msg('添加成功');
-                    //window.location.href = '/b_cms_index.html';
-                    window.history.back(-1);
-                } else {
+                if (data.status=='false')
+                {
                     $('#token').val(data.token);
                     layer.msg(data.info);
+                } else  {
+                    layer.msg('修改成功');
+                    window.history.back(-1);
                 }
             }
         });
     })
-
 </script>
 

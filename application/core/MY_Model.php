@@ -538,6 +538,7 @@ class Temp_model extends MY_Model
             $linkTable = isset($value['alias']) && $value['alias'] != '' ? $value['alias']:$this->db->dbprefix($key);
             $whereArray[] = $tabelName.'.'.$value['foreign_key'].'='.$linkTable.'.'.$value['relation_id'];
         }
+
         if (is_array($input)) {
             $where = $this->where($this->where, $input);
             if ($where !='')
@@ -547,7 +548,8 @@ class Temp_model extends MY_Model
             else
                 $sql = $sql . implode(', ', $linkArray).' where '. implode(' and ', $whereArray);
         } else {
-            $whereArray[] = $input;
+            //$whereArray = array_merge($whereArray, $input);
+            //var_dump(count($whereArray));
             if (count($whereArray) == 0)
                 $sql =  $sql . implode(', ', $linkArray);
             else
@@ -583,7 +585,7 @@ class Temp_model extends MY_Model
     public function lists($input = null)    #input 表示筛选数据  常用  like 模糊查询   = 　> <  limit
     {
         if ($input != '') {
-            $where = " where ";
+            $where = " ";
         }
 
         /*  $sql = "select * from "

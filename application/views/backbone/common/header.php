@@ -5,13 +5,58 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title><?php if (isset($title) && $title !='')echo $title;else echo "后台管理系统" ?></title>
+    <title><?php if (isset($title) && $title !='')echo $title;else echo "飞年管理系统" ?></title>
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" href="/adminasset/css/bootstrap.min.css">
     <link rel="stylesheet" href="/adminasset/css/global.css">
     <link rel="stylesheet" href="/adminasset/css/index.css">
     <link rel="stylesheet" href="/adminasset/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/adminasset/css/user_return.css">
+    <style>
+        .form-input-mid{
+            width: 250px;
+            height: 30px;
+            margin: 0 5px;
+            text-indent: 5px;
+        }
+        .form-input-large{
+            width: 80%;
+            max-width:650px;
+            height: 30px;
+            margin: 0 5px;
+            text-indent: 5px;
+        }
+        .form-input-file {
+            text-indent: 5px;
+        }
+        .form-select {
+            width: 80%;
+            max-width:250px;
+            height: 30px;
+            margin: 0 5px;
+            text-indent: 5px;
+        }
+        .form-textarea {
+            width: 80%;
+            max-width:650px;
+            height: 80px;
+            margin: 0 5px;
+            text-indent: 5px;
+        }
+    </style>
+    <link rel="stylesheet" href="/asset/ked/themes/default/default.css" />
+    <link rel="stylesheet" href="/asset/ked/plugins/code/prettify.css" />
+    <link rel="stylesheet" type="text/css" href="/adminasset/uploadify/uploadify.css">
+
     <script src="/adminasset/js/jquery-1.11.3.min.js"></script>
+    <script charset="utf-8" src="/adminasset/uploadify/jquery.js"></script>
+    <script src="/adminasset/uploadify/jquery.uploadify.js" type="text/javascript"></script>
+    <script src="/adminasset/js/laydate/laydate.js"></script>
+    <script charset="utf-8" src="/asset/ked/kindeditor.js"></script>
+    <script src="/adminasset/js/common.js"></script>
+    <script src="/adminasset/vendor/laypage/laypage.js"></script>
+    <script src="/adminasset/vendor/laytpl.js"></script>
+    <script src="/adminasset/js/layer/layer.js"></script>
 </head>
 
 <body>

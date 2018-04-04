@@ -2,7 +2,69 @@
         <div class="personal clearfix">
             <div class="container">
                 <div class="row">
-                    <div class="col-md12">
+                    <div class="col-md-4">
+                        <div class="notice">
+                            <div class="avatar fl"><i class="fa fa-commenting-o"></i></div>
+                            <div class="noticeBox">
+                                <p><i class="yetNum">0</i> 续费待办 </p>
+                                <p><i class="yetNum">0</i> 投资待办 </p>
+                                <p><i class="yetNum">0</i> 礼券 </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="notice">
+                            <div class="avatar fl"><i class="fa fa-commenting-o"></i></div>
+                            <div class="noticeBox">
+                                <p><i class="yetNum">0</i> 续费待办 </p>
+                                <p><i class="yetNum">0</i> 投资待办 </p>
+                                <p><i class="yetNum">0</i> 礼券 </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="notice">
+                            <div class="avatar fl"><i class="fa fa-commenting-o"></i></div>
+                            <div class="noticeBox">
+                                <p><i class="yetNum">0</i> 续费待办 </p>
+                                <p><i class="yetNum">0</i> 投资待办 </p>
+                                <p><i class="yetNum">0</i> 礼券 </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="personal clearfix">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="notice">
+                            <div class="avatar fl"><i class="fa fa-commenting-o"></i></div>
+                            <div class="noticeBox">
+                                <p><i class="yetNum">0</i> 续费待办 </p>
+                                <p><i class="yetNum">0</i> 投资待办 </p>
+                                <p><i class="yetNum">0</i> 礼券 </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="notice">
+                            <div class="avatar fl"><i class="fa fa-commenting-o"></i></div>
+                            <div class="noticeBox">
+                                <p><i class="yetNum">0</i> 续费待办 </p>
+                                <p><i class="yetNum">0</i> 投资待办 </p>
+                                <p><i class="yetNum">0</i> 礼券 </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="personal clearfix">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="notice">
                             <div class="avatar fl"><i class="fa fa-commenting-o"></i></div>
                             <div class="noticeBox">
@@ -49,7 +111,7 @@
                 </div>
             </div>
         </div>-->
-<!--
+
         <div class="personal clearfix">
             <div class="container">
                 <div class="row">
@@ -177,6 +239,5 @@
                 </div>
             </div>
         </div>
--->
     </div>
 </div>

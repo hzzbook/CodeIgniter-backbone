@@ -141,7 +141,9 @@ jQuery('.tabBox').slide({
     trigger: "click"
 });
 
-
+$('#backbtn').bind('click', function(){
+    window.history.back(-1);
+})
 
 /** 旧版的内容
 // 全选

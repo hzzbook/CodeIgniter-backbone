@@ -61,6 +61,7 @@
 <script>
     function getcategory() {
         $.post('/hzzadmin/cms/categorys', {
+                page: 1, //向服务端传的参数，此处只是演示
             },
             function (res) {
                 var gettpl = document.getElementById('catelist').innerHTML;
@@ -86,6 +87,7 @@
                     pages: res.page, //通过后台拿到的总页数
                     curr: curr || 1, //当前页
                     jump: function(obj, first){ //触发分页后的回调
+                        history.replaceState({page: curr}, '', '?page='+curr);
                         if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
                             demo(obj.curr);
                         }
@@ -98,7 +100,8 @@
             }
         }, 'json');
     };
-    demo();
+    $page = getParam('page');
+    demo($page);
     $('#searchbtn').bind('click', function(){
         demo();
     })
