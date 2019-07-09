@@ -22,7 +22,7 @@ class cms extends Admin_Controller
             'slider_tag' => 'cms',
             'nav_tag' => 'index'
         );
-        $this->display('backbone/cms/index', $data);
+        $this->display('backbone/cms/index2', $data);
     }
 
     //文章列表数据

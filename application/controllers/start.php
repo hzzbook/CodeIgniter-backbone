@@ -15,6 +15,46 @@ class start extends MY_Controller
         parent::__construct();
     }
 
+    public function test()
+    {
+        $this->load->model('content/article_model','artmodel');
+        $limit = $this->input->get('limit');
+        $offset = $this->input->get('offset');
+        /*if ($limit == '' && $offset == '') {
+            $where = $this->input->get();
+            $res = $this->artmodel->tablelists($where, 'all');
+        } else {
+            $where = array(
+                'page' => $offset / $limit + 1,
+                'pagenum' => $limit,
+                'orderby' => 'id:asc'
+            );
+            $where = array_merge($where, $this->input->get());
+            $res = $this->artmodel->tablelists($where);
+        }*/
+        if ($offset == '') {
+            $offset = 1;
+        }
+        if ($limit == '') {
+            $limit = 10;
+        }
+        $where = array(
+            'page' => floor($offset / $limit) + 1,
+            'pagenum' => $limit,
+           // 'orderby' => 'id:desc'
+        );
+        $where = array_merge($where, $this->input->get());
+        echo "<pre>";
+        $res = $this->artmodel->tablelists($where);
+        echo "<pre>";
+        var_dump($res);
+    }
+
+    public function index2()
+    {
+        echo "goood";
+    }
+
     #读取配置信息方法
     public function config_item()
     {
@@ -72,6 +112,7 @@ class start extends MY_Controller
 
     }
 
+    #生成分页
     public function pagestring($page = 'page',$total, $filter)
     {
         $this->load->library('Pageclass');

@@ -1,6 +1,5 @@
 <div class="mainWrap">
     <h4 class="cont_title"><span>__name__列表</span></h4>
-
     <div class="return_box">
     <div class="search_box">
         <div class="text_inputs">
@@ -13,8 +12,8 @@
     </div>
 </div>
 
-<script src="/adminasset/vendor/laypage/laypage.js"></script>
-<script src="/adminasset/vendor/laytpl.js"></script>
+<script src="/asset/adminasset/vendor/laypage/laypage.js"></script>
+<script src="/asset/adminasset/vendor/laytpl.js"></script>
 <script id="demo" type="text/html">
     <table class="table table-bordered table-hover">
         <thead>

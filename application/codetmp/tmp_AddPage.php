@@ -32,10 +32,10 @@
 </style>
 <link rel="stylesheet" href="/ked/themes/default/default.css" />
 <link rel="stylesheet" href="/ked/plugins/code/prettify.css" />
-<link rel="stylesheet" type="text/css" href="/adminasset/uploadify/uploadify.css">
+<link rel="stylesheet" type="text/css" href="/asset/adminasset/uploadify/uploadify.css">
 <script charset="utf-8" src="/ked/kindeditor.js"></script>
-<script charset="utf-8" src="/adminasset/uploadify/jquery.js"></script>
-<script src="/adminasset/uploadify/jquery.uploadify.js" type="text/javascript"></script>
+<script charset="utf-8" src="/asset/adminasset/uploadify/jquery.js"></script>
+<script src="/asset/adminasset/uploadify/jquery.uploadify.js" type="text/javascript"></script>
 
 <div class="mainWrap">
     <h4 class="cont_title"><span>添加__name__<a href="/b___Controller_____Function__sPage.html" class="button">返回</a></span></h4>
@@ -53,7 +53,7 @@
         </form>
     </div>
 </div>
-<script src="/adminasset/js/layer/layer.js"></script>
+<script src="/asset/adminasset/js/layer/layer.js"></script>
 <script type="text/javascript">
     <?php $timestamp = time();?>
     $(function() {

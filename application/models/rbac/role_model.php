@@ -64,6 +64,7 @@ class role_model extends Temp_model
         if ($id == 1) {     #超级管理员具有绝对权限
             $sql = "select * from "
                 . $this->db->dbprefix('rbac_node')
+                . " where status = 1"
                 . ' order by p_id asc, ordernum asc ';
         }  else {
             $sql = "select node.* from "
@@ -74,7 +75,7 @@ class role_model extends Temp_model
                 . ' left join '
                 . $this->db->dbprefix('rbac_node') . ' as node '
                 . ' on rolenode.node_id = node.id'
-                . " where role.id = '{$id}'"
+                . " where role.id = '{$id}' and node.status = 1"
                 . ' order by p_id asc, ordernum asc, id asc ';
         }
         return $this->getResult($sql);

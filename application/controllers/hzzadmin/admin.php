@@ -4,8 +4,7 @@
  * 说明：
  * 
  * @Author: hzz
- * @Date: 2017/3/3
- * 
+ * @Date: 2017/3/3 *
  */
 class admin extends MY_Controller
 {

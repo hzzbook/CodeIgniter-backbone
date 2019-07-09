@@ -16,7 +16,7 @@
 */
 #安装前的配置状态
 //$config['base_url']	= '__URL__';
-$config['base_url']	= 'http://www.v4.com';
+$config['base_url']	= 'http://www.backbone.com';
 
 /*
 |--------------------------------------------------------------------------
@@ -248,15 +248,26 @@ $config['encryption_key'] = 'IK34#@afz97';
 | 'sess_time_to_update'		= how many seconds between CI refreshing Session Information
 |
 */
+/*$config['sess_driver'] = 'files';
 $config['sess_cookie_name']		= 'ci_session';
 $config['sess_expiration']		= 7200;
+$config['sess_save_path'] = APPPATH.'data\session';
 $config['sess_expire_on_close']	= FALSE;
 $config['sess_encrypt_cookie']	= FALSE;
 $config['sess_use_database']	= FALSE;
 $config['sess_table_name']		= 'ci_sessions';
 $config['sess_match_ip']		= FALSE;
 $config['sess_match_useragent']	= TRUE;
-$config['sess_time_to_update']	= 300;
+$config['sess_time_to_update']	= 300;*/
+
+$config['sess_driver'] = 'files';
+$config['sess_cookie_name'] = 'test_session';
+$config['sess_save_path'] = APPPATH.'data\session';
+$config['sess_expiration'] = 3600;
+//$config['sess_save_path'] = 'test_sessions';
+$config['sess_match_ip'] = FALSE;
+$config['sess_time_to_update'] = 300;
+$config['sess_regenerate_destroy'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------

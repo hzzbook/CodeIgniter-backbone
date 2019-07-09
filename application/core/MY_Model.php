@@ -2,10 +2,9 @@
 
 
 class MY_Model extends CI_Model {
-	
-	public function __construct($group_name = '') {
-		parent::__construct();
-        $this->initDb($group_name);
+
+    public function __construct() {
+        parent::__construct();
     }
 
     #读写分离
@@ -28,113 +27,131 @@ class MY_Model extends CI_Model {
         }
         return $db_conn_name;
     }
-	
-	//获取一条记录的条件生成
-	/**
-	 * $where = array('type'=>'int/string','table'=>'','key'=>'', 'value' => '');
-	 */
-	function One($where) {
-		if (!isset($where['key']) || !isset($where['value']) || $where['key'] == '' || $where['value'] == '') {
-			return false;
-		}
-		switch($where['type']) {
-			case 'int':
-				$string = $where['table'].'.'.$where['key'].'='.$where['value'];
-				break;
-			case 'string':
-				$string = $where['table'].'.'.$where['key'].'="'.$where['value'].'"';
-				break;
-			default:
-				$string = $where['table'].'.'.$where['key'].'="'.$where['value'].'"';
-				break;
-		}
-		return ' where '.$string;
-	}
-	
-	/**
-	 * $where = array(
-	 * 		'name' => array(
-	 * 			'类型type', '数据表名table', '表达式expression'
-	 * 		 	# 类型有：time, date, string, int, like, prelike, sulike
-	 * 			# 表达式 ： =   > <   <=  >= 
-	 * 		)
-	 * );
-	 * 
-	 * 示例：
-	 * $where = array(
-		'type' =>array(
-			'filed' => 'filedname',
-			'type' => 'int',
-			'table' => 'hua',
-			'expression' =>'='
-		),
-		'price_up' => array(
-			'filed' => 'filedname',
-			'type' => 'int',
-			'table' => 'hua',
-			'expression' =>'<'
-		),
-		'price_down' => array(
-			'filed' => 'filedname',
-			'type' => 'int',
-			'table' => 'hua',
-			'expression' =>'>'
-		),
-	);
-	 */
-	function where($where, $get_post, $page = 'page'){
-		if (empty($where)) {
-			return '';
-		}
-		if(isset($get_post[$page])) {
-			unset($get_post[$page]);
-		}
-		if (empty($get_post)) {
-			return '';
-		}
-		
-		$constring = array();
-		foreach ($get_post as $key =>$value){
-			if (isset($where[$key]) && $value !='') {
-				switch($where[$key]['type']) {
-					case 'string':
-						$value = "'".$value."'";
-						break;
-					case 'date':
-						$value = "'".$value."'";
-						break;
-					case 'time':
-						$value = "'".$value."'";
-				}
-				if ($where[$key]['expression'] == 'like'){
-					$constring[]= $where[$key]['table'].'.'.$where[$key]['filed'].' like '.'"%'.$value.'%"';
-				}elseif ($where[$key]['expression'] == 'prelike'){
-					$constring[]= $where[$key]['table'].'.'.$where[$key]['filed'].' like '. '"'.$value.'%"';
-				}elseif($where[$key]['expression'] == 'sulike') {
-					$constring[]= $where[$key]['table'].'.'.$where[$key]['filed'].' like '.'"%'.$value.'"';
-				} else 
-					$constring[]= $where[$key]['table'].'.'.$where[$key]['filed'].' '.$where[$key]['expression'].' '.$value;
-			}
-		}
 
-		if (empty($constring)) {
-			return '';
-		}
-		return " where ". implode(' and ', $constring);
-	}
-	
-	public function makeOrder($orderData, $get)
-	{
-	
-		foreach ($orderData as $key => $value)
-		{
-			if (isset($get[$key])){
-				$orderData[$key]['orderby'] = $get[$key];
-			}
-		}
-		return $orderData;
-	}
-	
+    //获取一条记录的条件生成
+    /**
+     * $where = array('type'=>'int/string','table'=>'','key'=>'', 'value' => '');
+     */
+    function One($where) {
+        if (!isset($where['key']) || !isset($where['value']) || $where['key'] == '' || $where['value'] == '') {
+            return false;
+        }
+        switch($where['type']) {
+            case 'int':
+                $string = $where['table'].'.'.$where['key'].'='.$where['value'];
+                break;
+            case 'string':
+                $string = $where['table'].'.'.$where['key'].'="'.$where['value'].'"';
+                break;
+            default:
+                $string = $where['table'].'.'.$where['key'].'="'.$where['value'].'"';
+                break;
+        }
+        return ' where '.$string;
+    }
+
+    /**
+     * $where = array(
+     * 		'name' => array(
+     * 			'类型type', '数据表名table', '表达式expression'
+     * 		 	# 类型有：time, date, string, int, like, prelike, sulike
+     * 			# 表达式 ： =   > <   <=  >=
+     * 		)
+     * );
+     *
+     * 示例：
+     * $where = array(
+    'type' =>array(
+    'filed' => 'filedname',
+    'type' => 'int',
+    'table' => 'hua',
+    'expression' =>'='
+    ),
+    'price_up' => array(
+    'filed' => 'filedname',
+    'type' => 'int',
+    'table' => 'hua',
+    'expression' =>'<'
+    ),
+    'price_down' => array(
+    'filed' => 'filedname',
+    'type' => 'int',
+    'table' => 'hua',
+    'expression' =>'>'
+    ),
+    );
+     */
+    function where($where, $get_post, $page = 'page'){
+        if (empty($where)) {
+            return '';
+        }
+        if(isset($get_post[$page])) {
+            unset($get_post[$page]);
+        }
+        if (empty($get_post)) {
+            return '';
+        }
+
+        $constring = array();
+        foreach ($get_post as $key =>$value){
+            if (isset($where[$key]) && $value !='') {
+                switch($where[$key]['type']) {
+                    case 'string':
+                        $value = "'".$value."'";
+                        break;
+                    case 'date':
+                        $value = "'".$value."'";
+                        break;
+                    case 'time':
+                        $value = "'".$value."'";
+                }
+                if ($where[$key]['expression'] == 'like'){
+                    $constring[]= $where[$key]['table'].'.'.$where[$key]['filed'].' like '.'"%'.$value.'%"';
+                }elseif ($where[$key]['expression'] == 'prelike'){
+                    $constring[]= $where[$key]['table'].'.'.$where[$key]['filed'].' like '. '"'.$value.'%"';
+                }elseif($where[$key]['expression'] == 'sulike') {
+                    $constring[]= $where[$key]['table'].'.'.$where[$key]['filed'].' like '.'"%'.$value.'"';
+                } else
+                    $constring[]= $where[$key]['table'].'.'.$where[$key]['filed'].' '.$where[$key]['expression'].' '.$value;
+            }
+        }
+
+        if (empty($constring)) {
+            return '';
+        }
+        return " where ". implode(' and ', $constring);
+    }
+
+    public function makeOrder($orderData, $get)
+    {
+
+        foreach ($orderData as $key => $value)
+        {
+            if (isset($get[$key])){
+                $orderData[$key]['orderby'] = $get[$key];
+            }
+        }
+        return $orderData;
+    }
+
+
+    function getResult($sql) {
+        $query = $this->db->query($sql);
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return false;
+        }
+    }
+
+    function getRow($sql) {
+        $query = $this->db->query($sql);
+        if ($query->num_rows() > 0) {
+            return $query->row_array();
+        } else {
+            return false;
+        }
+    }
 
     /**
      *
@@ -158,53 +175,53 @@ class MY_Model extends CI_Model {
         }
         return ' order by '. implode(', ', $temp);
     }
-	
-	/**
-	 * 生成分页信息
-	 * @param array $limit
-	 */
-	public function limit($limit, $sum) {
-		if (!isset($limit['page']) || $limit['page'] == '') {
-			$page = 1;
-		} else {
-			$page = $limit['page']; //当前页数
-		}
-		if (!isset($limit['num']) || $limit['num'] == '') {
-			$num = 10;
-		} else {
-			$num  = $limit['num'];	//每页显示条数
-		}
 
-		$bigest_page = ceil($sum / $num);
-		if ($page > $bigest_page) {
-			$page = $bigest_page;	#页数不能超过最大的页数
+    /**
+     * 生成分页信息
+     * @param array $limit
+     */
+    public function limit($limit, $sum) {
+        if (!isset($limit['page']) || $limit['page'] == '') {
+            $page = 1;
+        } else {
+            $page = $limit['page']; //当前页数
+        }
+        if (!isset($limit['num']) || $limit['num'] == '') {
+            $num = 10;
+        } else {
+            $num  = $limit['num'];	//每页显示条数
+        }
+
+        $bigest_page = ceil($sum / $num);
+        if ($page > $bigest_page) {
+            $page = $bigest_page;	#页数不能超过最大的页数
             return 'toobig';
-		}
+        }
 
-		$start = ($page-1) * $num;
+        $start = ($page-1) * $num;
         $data = array(
             'page' => $bigest_page,
             'string' => ' limit '.$start.','.$num
         );
-		return $data;
-	}
-	
-	/**
-	 * 
-	 * 单表插入数据
-	 * 
-	 * @param 表名 $table
-	 * @param 数据 $data
-	 * @return 成功返回插入的ID，不成功发挥false
-	 */
-	protected function add($table, $data) {
-		$this->db->insert($table, $data);
-		if ($this->db->affected_rows() > 0) {
-			return $this->db->insert_id();
-		} else {
-			return false;
-		}
-	}
+        return $data;
+    }
+
+    /**
+     *
+     * 单表插入数据
+     *
+     * @param 表名 $table
+     * @param 数据 $data
+     * @return 成功返回插入的ID，不成功发挥false
+     */
+    protected function add($table, $data) {
+        $this->db->insert($table, $data);
+        if ($this->db->affected_rows() > 0) {
+            return $this->db->insert_id();
+        } else {
+            return false;
+        }
+    }
 
     /**
      * 单表批量插入数据
@@ -235,66 +252,54 @@ class MY_Model extends CI_Model {
         $res = $this->db->query($sql);
         return $res;
     }
-	
-	/**
-	 * 
-	 * 单表真正删除数据
-	 * 
-	 * @param ID $id
-	 * @param string $table 表名
-	 * @return boolean
-	 */
-	protected function delete($table, $id) {
-		$this->db->where('id', $id);
-		$this->db->delete($table);
-		if ($this->db->affected_rows() > 0) {
-			return true;
-		} else
-			return false;
-	}
-	
-	/**
-	 * 单表更新数据
-	 * 
-	 * @param string $table 表名
-	 * @param array $data   更新的数据
-	 * @param int $id		更新条目的ID
-	 * @return boolean
-	 */
-	protected function update($table, $data, $id) {
-		$this->db->where('id', $id);
-		$this->db->update($table, $data);
-	
-		if ($this->db->affected_rows() > 0) {
-			return true;
-		} else
-			return false;
-	}
-	
-	/*
-	 * 多表条件下的增加修改
-	 */
-	protected function  multi_add($table, $data) {
-		$this->db->insert($table, $data);
-	}
-	
-	protected function multi_update($table, $data, $id) {
-		$this->db->where('id', $id);
-		$this->db->update($table, $data);
-	}
-	
-	protected function multi_start() {
-		$this->db->trans_start();
-	}
-	
-	protected function multi_end() {
-		$this->db->trans_complete();
-		if ($this->db->trans_status() === FALSE) {
-			return FALSE;
-		} else {
-			return TRUE;
-		}
-	}
+
+    /**
+     *
+     * 单表真正删除数据
+     *
+     * @param ID $id
+     * @param string $table 表名
+     * @return boolean
+     */
+    protected function delete($table, $id) {
+        $this->db->where('id', $id);
+        $this->db->delete($table);
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else
+            return false;
+    }
+
+    /**
+     * 单表更新数据
+     *
+     * @param string $table 表名
+     * @param array $data   更新的数据
+     * @param int $id		更新条目的ID
+     * @return boolean
+     */
+    protected function update($table, $data, $id) {
+        $this->db->where('id', $id);
+        $this->db->update($table, $data);
+
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else
+            return false;
+    }
+
+    protected function multi_start() {
+        $this->db->trans_start();
+    }
+
+    protected function multi_end() {
+        $this->db->trans_complete();
+        if ($this->db->trans_status() === FALSE) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
 
 }
 
@@ -306,61 +311,61 @@ class Temp_model extends MY_Model
     var $alias;
     #关联表
     var $link = array(
-       /* 'test_cate' => array(
-            'alias' => 'cate',
-            'relation_id' => 'id',
-            'foreign_key' => 'cateid',
-        ),
-        'test_user' => array(
-            'alias' => 'users',
-            'relation_id' => 'id',
-            'foreign_key' => 'authorid',
-        ),*/
+        /* 'test_cate' => array(
+             'alias' => 'cate',
+             'relation_id' => 'id',
+             'foreign_key' => 'cateid',
+         ),
+         'test_user' => array(
+             'alias' => 'users',
+             'relation_id' => 'id',
+             'foreign_key' => 'authorid',
+         ),*/
     );
 
     #设置唯一查询的列
     var $itemKey = array(
-       /* 'id' => array(
-            'filed' => 'id'
-        ),
-        'content' => array(
-            'filed' => 'content'
-        ),*/
+        /* 'id' => array(
+             'filed' => 'id'
+         ),
+         'content' => array(
+             'filed' => 'content'
+         ),*/
     );
 
     var $column = array(
-       /* 'id' => array(
-            'filed' => 'id'
-        ),
-        'name' => array(
-            'filed' => 'name'
-        ),
-        'cateid' => array(
-            'filed' => 'cateid'
-        ),
-        'content' => array(
-            'filed' => 'content'
-        ),
-        'cover' => array(
-            'filed' => 'cover'
-        ),
-        'status' => array(
-            'filed' => 'status'
-        ),
-        'authorid' => array(
-            'filed' => 'authorid'
-        ),
-        'addtime' => array(
-            'filed' => 'addtime'
-        ),
-        'catename' => array(
-            'filed' => 'catename',
-            'table' => 'cate'
-        ),
-        'authorname' => array(
-            'filed' => 'realname',
-            'table' => 'users'
-        )*/
+        /* 'id' => array(
+             'filed' => 'id'
+         ),
+         'name' => array(
+             'filed' => 'name'
+         ),
+         'cateid' => array(
+             'filed' => 'cateid'
+         ),
+         'content' => array(
+             'filed' => 'content'
+         ),
+         'cover' => array(
+             'filed' => 'cover'
+         ),
+         'status' => array(
+             'filed' => 'status'
+         ),
+         'authorid' => array(
+             'filed' => 'authorid'
+         ),
+         'addtime' => array(
+             'filed' => 'addtime'
+         ),
+         'catename' => array(
+             'filed' => 'catename',
+             'table' => 'cate'
+         ),
+         'authorname' => array(
+             'filed' => 'realname',
+             'table' => 'users'
+         )*/
     );
 
     #查询过滤
@@ -392,15 +397,15 @@ class Temp_model extends MY_Model
     );
 
     var $order = array(
-       /* 'id' => array(
-            'table' => '',
-            'filed' => 'id',
-            'orderby' => 'desc'
-        ),*/
+        /* 'id' => array(
+             'table' => '',
+             'filed' => 'id',
+             'orderby' => 'desc'
+         ),*/
     );
 
     var $limit = array(
-       'page' => 1,
+        'page' => 1,
         'num'  => 10
     );
 
@@ -492,13 +497,11 @@ class Temp_model extends MY_Model
     function changeOrder($orderArray)
     {
         $tabelName = $this->alias == '' ? $this->db->dbprefix($this->table):$this->alias;
-        foreach ($orderArray as $key=> $value) {
-            if (isset($value['table']) && $value['table'] !='')
-                $temp[] = $value['table'].'.'.$value['filed'].' '.$value['orderby'];
-            else
-                $temp[] = $tabelName.'.'.$value['filed'].' '.$value['orderby'];
-        }
-        return $temp;
+        if (isset($orderArray['table']) && $orderArray['table'] !='')
+            $res = $orderArray['table'].'.'.$orderArray['filed'].' '.$orderArray['orderby'];
+        else
+            $res = $tabelName.'.'.$orderArray['filed'].' '.$orderArray['orderby'];
+        return $res;
     }
 
     function order ($input)
@@ -507,8 +510,35 @@ class Temp_model extends MY_Model
         if (empty($this->order)) {
             return '';
         }
+        if (isset($input['orderby']) && $input['orderby'] != '') {
+            $order_array = explode(',', $input['orderby']);
+            $order_lists = array();
+            foreach ($order_array as $key => $value) {
+                $temp = explode(':', $value);
+                if (isset($temp[1]) && $temp[1] != '') {
+                    $order_lists[] = array(
+                        'key' => $temp[0],
+                        'orderby' => $temp[1]
+                    );
+                }
+            }
+            if (!empty($order_lists)) {
+                $temp = array();
+                foreach ($order_lists as $key => $value) {
+                    if (array_key_exists($value['key'], $this->order)) {
+                        $order = $this->order[$value['key']];
+                        $order['orderby'] = $value['orderby'];
+                        $temp[] = $this->changeOrder($order);
+                    }
+                }
+            } else {
+                $temp = array();
+            }
+        } else {
+            $temp = array();
+        }
 
-        if (isset($input['order']) && array_key_exists($input['order'], $this->order)) {
+        /*if (isset($input['order']) && array_key_exists($input['orderby'], $this->order)) {
             $orderArray = array($this->order[$input['order']]);
             $temp = $this->changeOrder($orderArray);
         } elseif(isset($this->order['default'])) {
@@ -516,10 +546,13 @@ class Temp_model extends MY_Model
             $temp = $this->changeOrder($orderArray);
         } else {
             $temp = array();
-        }
+        }*/
 
         if (empty($temp))
             return '';
+        else {
+            $str = ' order by ' . implode(', ', $temp);
+        }
         return ' order by '. implode(', ', $temp);
     }
 
@@ -538,6 +571,7 @@ class Temp_model extends MY_Model
             $linkTable = isset($value['alias']) && $value['alias'] != '' ? $value['alias']:$this->db->dbprefix($key);
             $whereArray[] = $tabelName.'.'.$value['foreign_key'].'='.$linkTable.'.'.$value['relation_id'];
         }
+
         if (is_array($input)) {
             $where = $this->where($this->where, $input);
             if ($where !='')
@@ -547,11 +581,46 @@ class Temp_model extends MY_Model
             else
                 $sql = $sql . implode(', ', $linkArray).' where '. implode(' and ', $whereArray);
         } else {
-            $whereArray[] = $input;
+            //$whereArray = array_merge($whereArray, $input);
+            //var_dump(count($whereArray));
             if (count($whereArray) == 0)
                 $sql =  $sql . implode(', ', $linkArray);
             else
                 $sql = $sql . implode(', ', $linkArray).' where '. implode(' and ', $whereArray);
+        }
+
+        return $sql;
+    }
+
+    public function ItemlinkSql($input = '')
+    {
+        $sql = "";
+        $linkArray = array();
+        $linkArray[] = $this->db->dbprefix($this->table).' '. $this->alias;
+
+        $tabelName = $this->alias == '' ? $this->db->dbprefix($this->table):$this->alias;
+
+        $whereArray = array();
+        foreach ($this->link as $key => $value)
+        {
+            $linkArray[] = $this->db->dbprefix($key).' '.$value['alias'];
+            $linkTable = isset($value['alias']) && $value['alias'] != '' ? $value['alias']:$this->db->dbprefix($key);
+            $whereArray[] = $tabelName.'.'.$value['foreign_key'].'='.$linkTable.'.'.$value['relation_id'];
+        }
+
+        if (is_array($input)) {
+            $where = $this->where($this->where, $input);
+            if ($where !='')
+                $whereArray = array_merge($whereArray, $where);
+            if (count($whereArray) == 0)
+                $sql =  $sql . implode(', ', $linkArray);
+            else
+                $sql = $sql . implode(', ', $linkArray).' where '. implode(' and ', $whereArray);
+        } else {
+            if (count($whereArray) == 0)
+                $sql =  $sql . implode(', ', $linkArray). ' where '. $input;
+            else
+                $sql = $sql . implode(', ', $linkArray).' where '. implode(' and ', $whereArray) . ' and '. $input;
         }
 
         return $sql;
@@ -580,12 +649,11 @@ class Temp_model extends MY_Model
         return $sql;
     }
 
-    public function lists($input = null)    #input 表示筛选数据  常用  like 模糊查询   = 　> <  limit
+    public function lists($input = null, $all = 'not')    #input 表示筛选数据  常用  like 模糊查询   = 　> <  limit
     {
         if ($input != '') {
-            $where = " where ";
+            $where = " ";
         }
-
         /*  $sql = "select * from "
              . $this->db->dbprefix('test_item');   #获取数据表中所有数据
 
@@ -629,8 +697,11 @@ class Temp_model extends MY_Model
             'page' => isset($input['page']) && $input['page'] !='' ? intval($input['page']) : 1,
             'num'  => isset($input['pagenum']) && $input['pagenum'] != '' ? intval($input['pagenum']) : $this->limit['num'],
         );
-
-        $limit = $this->limit($limitArray, $total['sum']);
+        if ($all == 'all') {
+            $limit['string'] = '';
+        } else {
+            $limit = $this->limit($limitArray, $total['sum']);
+        }
         if ($limit == 'toobig') {
             $back = array(
                 'status' => 'false',
@@ -663,6 +734,63 @@ class Temp_model extends MY_Model
         return $back;
     }
 
+    public function tablelists($input = null, $all = 'not')    #input 表示筛选数据  常用  like 模糊查询   = 　> <  limit
+    {
+        if ($input != '') {
+            $where = " ";
+        }
+
+        $sql = $this->linkSql($input);
+        #$sql = $this->leftSql($input);
+        $tableName = $this->alias == '' ? $this->db->dbprefix($this->table):$this->alias;
+        $numSql = " select count({$tableName}.id) as sum from ".$sql;
+        $total = $this->getRow($numSql);
+        if ($total['sum'] == '0') {
+            $back = array(
+                'status' => 'false',
+                'code'   => '404',      #无数据
+            );
+            return $back;
+        }
+        $limitArray = array(
+            'page' => isset($input['page']) && $input['page'] !='' ? intval($input['page']) : 1,
+            'num'  => isset($input['pagenum']) && $input['pagenum'] != '' ? intval($input['pagenum']) : $this->limit['num'],
+        );
+
+        if ($all == 'all') {
+            $limit['string'] = '';
+        } else {
+            $limit = $this->limit($limitArray, $total['sum']);
+        }
+        if ($limit == 'toobig') {
+            $back = array(
+                'status' => 'false',
+                'code'   => '405',
+                'info'   => '没有更多数据'
+            );
+        } else {
+            $order = $this->order($input);
+            $column = $this->column();
+            $resSql = " select $column from " . $sql . ' ' . $order . ' ' . $limit['string'];
+
+            $result = $this->getResult($resSql);
+            /**********************数据处理***********************/
+            if ($result !== false) {
+                $back = array(
+                    'rows'   => $result,            #单页记录数据
+                    'total'  => $total['sum'],      #记录总数
+                );
+            } else {
+                $back = array(
+                    'status' => 'false',
+                    'code'   => '404',      #无数据
+                );
+
+            }
+        }
+        return $back;
+    }
+
     public function itemSql($input, $key)
     {
         $tableName = $this->alias == '' ? $this->db->dbprefix($this->table):$this->alias;
@@ -681,11 +809,10 @@ class Temp_model extends MY_Model
     {
         $column = $this->column();
         $input = $this->itemSql($value, $key);
-        $tableSql = $this->linkSql($input);
+        $tableSql = $this->ItemlinkSql($input);
 
         $sql = "select $column from "
             . $tableSql;
-        #echo $sql;
         $result = $this->getRow($sql);
         if ($result !== false) {
             $back = array(
@@ -705,17 +832,64 @@ class Temp_model extends MY_Model
 
     public function itemAdd($data)
     {
-        return $this->add($this->table, $data);
+        $result =  $this->add($this->table, $data);
+        if ($result !== false) {
+            $back = array(
+                'status' => 'true',
+                'code'   => '0',
+                'data'   => $result,            #返回插入记录的ID
+            );
+        } else {
+            $back = array(
+                'status' => 'false',
+                'code'   => '400',
+            );
+
+        }
+        return $back;
     }
 
     public function itemUpdate($data, $id)
     {
-        return $this->update($this->table, $data, $id);
+        $result =  $this->update($this->table, $data, $id);
+        if ($result !== false) {
+            $back = array(
+                'status' => 'true',
+                'code'   => '0'
+            );
+        } else {
+            $back = array(
+                'status' => 'false',
+                'code'   => '400',
+            );
+        }
+        return $back;
     }
 
     public function itemDelete($id)
     {
-        return $this->delete($this->table, $id);
+        $result = $this->delete($this->table, $id);
+        if ($result !== false) {
+            $back = array(
+                'status' => 'true',
+                'code'   => '0'
+            );
+        } else {
+            $back = array(
+                'status' => 'false',
+                'code'   => '400',
+            );
+        }
+        return $back;
+    }
+
+    public function multiDelete($table, $ids) {
+        $sql = "delete from ". $this->db->dbprefix($this->table)." where id=({$ids})";
+        $this->db->query($sql);
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else
+            return false;
     }
 
 }

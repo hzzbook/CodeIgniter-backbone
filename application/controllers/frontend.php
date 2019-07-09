@@ -21,6 +21,9 @@ class frontend extends frontbase
             'pagenum' => 2,
         );
         $cateid2 = $this->article_model->lists($typeData);
+        if ($cateid2['code'] == '404') {
+            $cateid2['data'] = '';
+        }
         #幸福生活
         $typeData1 = array(      #取5条cateid=2的文章数据
             'cate' => '1',

@@ -77,6 +77,13 @@ class article_model extends Temp_model
         ),
     );
 
+    var $order = array(
+        'id' => array(
+             'table' => '',
+             'filed' => 'id'
+         ),
+    );
+
     public function __construct()
     {
         parent::__construct();
