@@ -141,4 +141,10 @@ class article_model extends Temp_model
         return $this->lists($s);
     }
 
+    public function website() {
+        $sql = "select * from "
+            . $this->db->dbprefix('system_setting');
+        return $this->getResult($sql);
+    }
+
 }

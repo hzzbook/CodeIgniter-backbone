@@ -38,7 +38,6 @@
             <td>{{ d.data[i].status }}</td>
             <td>
                 <a class="button" href="/b___Controller_____Function__sPage.html?id={{d.data[i].id}}">编辑</a>
-                <!--<a class="button" href="/b_auction_banneredit.html?id={{d.data[i].id}}">浏览</a>-->
                 <a class="button deleteArticle" data="{{d.data[i].id}}" href="javascript:void(0)" >删除</a>
             </td>
         </tr>

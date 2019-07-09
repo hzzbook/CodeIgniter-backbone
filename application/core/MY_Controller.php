@@ -117,9 +117,9 @@ class frontbase extends MY_Controller
     {
         $website = $this->on_off();
         $data = array_merge($data, $website);
-        $data['category'] = $this->category();
-        $data['friend'] = $this->friend();
-        $data['about'] = $this->about();
+        #$data['category'] = $this->category();
+        #$data['friend'] = $this->friend();
+        #$data['about'] = $this->about();
         if (!isset($data['title']) || $data['title'] == '')
             $data['title'] = $data['site_name'];
         else
@@ -140,7 +140,7 @@ class frontbase extends MY_Controller
 
     public function website()
     {
-        $this->load->model('cms_model', 'model2');
+        $this->load->model('content/article_model', 'model2');
         $res = $this->model2->website();
         $data = array();
         foreach ($res as $key=> $value)
@@ -152,24 +152,16 @@ class frontbase extends MY_Controller
 
     public function about()
     {
-        $this->load->model('cms_model', 'model2');
-        $res = $this->model2->content(3);
-        return $res;
-    }
-
-    public function category()
-    {
-        $this->load->model('cms_model', 'model2');
-        $data = array();
-        $res = $this->model2->categorys($data);
+        $this->load->model('content/content_model', 'model5');
+        $res = $this->model5->content(3);
         return $res;
     }
 
     public function friend()
     {
-        $this->load->model('cms_model', 'model2');
+        $this->load->model('content/friendly_model', 'model3');
         $data = array();
-        $res = $this->model2->friendlinks($data);
+        $res = $this->model3->friendlinks($data);
         return $res;
     }
 

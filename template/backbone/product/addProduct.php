@@ -39,7 +39,7 @@
 
 <div class="mainWrap">
     <h4 class="cont_title">
-        <span>写产品    <a href="/b_product_index.html" class="button">返回</a></span>
+        <span>写产品    <a href="javascript:void(0)" id="backbtn" class="button">返回</a></span>
 
     </h4>
     <div class="row" style="margin-top:20px;padding-bottom: 40px">

@@ -14,7 +14,6 @@ class users extends Admin_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('user_model', 'model');
     }
 
     /**
@@ -32,7 +31,8 @@ class users extends Admin_Controller
     public function userlist()
     {
         $input = $this->input->post();
-        $res = $this->model->users($input);
+        $this->load->model('core/user_model', 'model');
+        $res = $this->model->lists($input);
         #
         if ($res['status'] == 'true')
         {

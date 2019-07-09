@@ -92,7 +92,6 @@
             <td>{{ d.data[i].logtime }}</td>
             <td>
                 <a class="button" href="/b_cms_articleUpdatePage.html?id={{d.data[i].id}}">编辑</a>
-                <!--<a class="button" href="/b_cms_articleedit.html?id={{d.data[i].id}}">浏览</a>-->
                 <a class="button deleteArticle" data="{{d.data[i].id}}" href="javascript:void(0)" >删除</a>
             </td>
         </tr>
@@ -132,6 +131,8 @@
                     pages: res.page, //通过后台拿到的总页数
                     curr: curr || 1, //当前页
                     jump: function(obj, first){ //触发分页后的回调
+                        //history.replaceState('','?pages='+curr);
+                        history.replaceState({page: curr}, '', '?page='+curr);
                         if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
                             demo(obj.curr);
                         }
@@ -144,7 +145,8 @@
             }
         }, 'json');
     };
-    demo();
+    $page = getParam('page');
+    demo($page);
 
     $('#searchbtn').bind('click', function(){
         demo();

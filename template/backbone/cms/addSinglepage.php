@@ -129,9 +129,6 @@
             }
         });
     })
-    $('#backbtn').bind('click', function(){
-        window.history.back(-1);
-    })
 </script>
 
 

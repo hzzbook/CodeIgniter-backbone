@@ -13,7 +13,6 @@ class product extends Admin_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('product_model', 'model');
     }
 
     public function index()
@@ -34,8 +33,8 @@ class product extends Admin_Controller
         if (!isset($input['status']) || $input['status'] == ''){
             $input['status'] = 1;
         }
-
-        $data = $this->model->products($input);
+        $this->load->model('product/product_model', 'model');
+        $data = $this->model->lists($input);
         echo urldecode(json_encode($data));
     }
 
@@ -43,7 +42,8 @@ class product extends Admin_Controller
     public function article()
     {
         $input = $this->input->post();
-        $data = $this->model->product($input['id']);
+        $this->load->model('product/product_model', 'model');
+        $data = $this->model->product('id', $input['id']);
         echo urldecode(json_encode($data));
     }
 
